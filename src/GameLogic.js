@@ -1,4 +1,4 @@
-/**Types of blocks:
+/**Types of blocks: "air"; "stone"; "water"; "fixw"; "buck"; "obsi"
  * 0 Air
  * 1 Stone
  * 2 Water
@@ -14,7 +14,7 @@ class GameGrid {
         this.size = size;
         this.grid = this.intializeGrid(size);
         this.bucketGrid = null;
-        this.numToIcon = {0:" ", 1:"#", 2:"o", 3:"o"};
+        this.numToIcon = {"air":" ", "stone":"#", "water":"o", "fixw":"o"};
     }
 
     getSize() {
@@ -22,8 +22,8 @@ class GameGrid {
     }
 
     placeBlock(x, y, type) {
-        if (this.grid[x][y] === 0) {
-            this.grid[x][y] = type;
+        if (this.grid[y][x] === "air") {
+            this.grid[y][x] = type;
             return true;
         } else {
             return false;
@@ -35,8 +35,8 @@ class GameGrid {
     resetGrid() {
         for (let x = 0; x <  this.grid.length; x++) {
             for (let y = 0; y <  this.grid.length; y++) {
-                if ( this.grid[x][y] === 2) {
-                     this.grid[x][y] = 0;
+                if ( this.grid[y][x] === "water" || this.grid[y][x] === "fixw") {
+                     this.grid[y][x] = "air";
                 }
             }
         }
@@ -47,7 +47,7 @@ class GameGrid {
         for (var i = 0; i < this.size; i++) {
             grid[i] = new Array(this.size);
             for(var j=0; j<this.size; j++) {
-                grid[i][j] = 0;
+                grid[i][j] = "air";
             }
         }
         return grid;
@@ -56,30 +56,33 @@ class GameGrid {
     /** Function initializes bucket grid, taking in as input size of grid and source and exit points (just x coordinate)
      * for water. Places source of water and bucket on selected points, and obsidian everywhere else
      */
-    initBucketGrid(size, source, exit) {
+    initBucketGrid(size, sourceArray, exitArray) {
         const HEIGHT = 2;
         this.bucketGrid = new Array(HEIGHT);
         for (var i = 0; i < HEIGHT; i++) {
             this.bucketGrid[i] = new Array(size);
             for(var j=0; j<size; j++) {
-                this.bucketGrid[i][j] = 5;
+                this.bucketGrid[i][j] = "air";
             }
         }
-        this.bucketGrid[0][source] = 3;
-        this.bucketGrid[1][exit] = 4;
-        return this.bucketGrid;
+        for (source in sourceArray) {
+            this.bucketGrid[0][source] = "water";
+        }
+        for (exit in exitArray) {
+            this.bucketGrid[1][exit] = "buck";
+        }
     }
     /** Function returns boolean if block above bucket has water, representing win
     */
-    checkForWin() {
-        let bucketLoc = 0;
-        for (let i = 0; i < this.bucketGrid[1].length; i++) {
-            if (i === 4) {
+    checkForWin(grid, bucketGrid) {
+        let bucketLoc
+        for (i = 0; i < bucketGrid[1].length; i++) {
+            if (i === "buck") {
                 bucketLoc = i;
             }
         }
-        let previousBlock = this.grid[this.grid.length-1][bucketLoc];
-        if (previousBlock === 2 || previousBlock === 3) {
+        let previousBlock = grid[grid.length-1][bucketLoc];
+        if (previousBlock === "water" || previousBlock == "fixw") {
             return true;
         }
         return false;
@@ -100,33 +103,33 @@ class GameGrid {
     updateGrid() {
         for(var i=0; i< this.grid.length-1; i++) {
             for(var j=0; j< this.grid[i].length; j++) {
-                if ( this.grid[i][j] === 2) {
-                    if ( this.grid[i+1][j] === 0) {
+                if ( this.grid[i][j] === "water") {
+                    if ( this.grid[i+1][j] === "air") {
                          this.grid[i+1][j] = 4;
-                    } else if ( this.grid[i+1][j] === 1) {
-                        if ( this.grid[i][j-1] === 0)  this.grid[i][j-1] = 4;
-                        if ( this.grid[i][j+1] === 0)  this.grid[i][j+1] = 4;
+                    } else if ( this.grid[i+1][j] === "stone") {
+                        if ( this.grid[i][j-1] === "air")  this.grid[i][j-1] = 4;
+                        if ( this.grid[i][j+1] === "air")  this.grid[i][j+1] = 4;
                     }
-                    this.grid[i][j] = 3;
+                    this.grid[i][j] = "fixw";
                 }
             }
         }
         for(i=0; i< this.grid.length; i++) {
             for(j=0; j< this.grid[i].length; j++) {
-                if ( this.grid[i][j] === 4)  this.grid[i][j] = 2;
+                if ( this.grid[i][j] === 4)  this.grid[i][j] = "water";
             }
         }
         
     }
 //shouldnt this be grid[y][x]?
     placeWater(x, y) {
-         this.grid[y][x] = 2;
+         this.grid[y][x] = "water";
     }
     // test code end
 
     done() { //check sides, check split paths
         for (let i = 0; i <  this.grid[0].length; i++) {
-            if ( this.grid[this.grid.length-1][i] === 2 ||  this.grid[this.grid.length-1][i] === 3) {
+            if ( this.grid[this.grid.length-1][i] === "water" ||  this.grid[this.grid.length-1][i] === "fixw") {
                 return true
             }
         }
@@ -134,7 +137,7 @@ class GameGrid {
     }
 
     placeStone(x, y) {
-        this.grid[y][x] = 1;
+        this.grid[y][x] = "stone";
     }
     getIndex(x, y) {
         return (
