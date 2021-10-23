@@ -4,16 +4,18 @@ class Block {
     }
     initWater(leftHeight, rightHeight) {
         this.nextWaterLevel = [leftHeight, rightHeight];
-        this.downFlow = false;
+        this.waterLevel = [0, 0];
+        //this.downFlow = false;
 
         this.updated = true
     }
-    initDownFlowWater() {
+    /*initDownFlowWater() {
         this.nextWaterLevel = [7, 7];
-        this.downFlow = true;
+        this.waterLevel = [0, 0];
+        //this.downFlow = true;
 
         this.updated = true
-    }
+    }*/
     heighten(leftHeight, rightHeight) {
         if (this.blockType !== "water") return;
         this.nextWaterLevel[0] = Math.max(this.waterLevel[0], leftHeight, this.nextWaterLevel[0]);

@@ -94,7 +94,7 @@ class GameGrid {
 
 
     printGrid() {
-        if (this.notupdated) throw "not updated!";
+        if (this.notupdated) throw new Error("not updated!");
         process.stdout.write("-----------------------------\n");
         for(var i=0; i< this.grid.length; i++) {
             for(var j=0; j< this.grid[i].length; j++) {
@@ -138,6 +138,7 @@ class GameGrid {
             }
         }
     }
+    /*
     updateNeighborBlock(x, y) {
         let nowBlock = this.grid[x][y];
         if (nowBlock.blockType !== "water") return;
@@ -152,10 +153,10 @@ class GameGrid {
                     this.grid[x+1][y].heighten(7, 7);
                     //hsidofisd
                 } else {
-                    throw "strange error 1"
+                    throw new Error("strange error 1");
                 }
             } else {
-                throw "unknown block type";
+                throw new Error("unknown block type");
             }
         } else {
             if (x === this.grid.length-1 || this.grid[x+1][y].blockType !== "stone")  {
@@ -168,11 +169,46 @@ class GameGrid {
                         this.grid[x][y-1].heighten(nowBlock.waterLevel[0] - 1, nowBlock.waterLevel[0]);
                     }
                 }
+                if (y < this.grid[x].length - 1) {
+                    if (this.grid[x][y+1].blockType === "air") {
+                        console.log(this.grid[x][y+1]);
+                        console.log(this.grid[x][y+1].initWater(nowBlock.waterLevel[1], nowBlock.waterLevel[1] - 1));
+                        this.grid[x][y+1].initWater(nowBlock.waterLevel[1], nowBlock.waterLevel[1] - 1);
+                    } else {
+                        this.grid[x][y+1].heighten(nowBlock.waterLevel[1], nowBlock.waterLevel[1] - 1);
+                    }
+                }
+            }
+            
+        }
+    }*/
+    updateNeighborBlock(x, y) {
+        let nowBlock = this.grid[x][y];
+        if (x<0 || x>= this.grid.length || y<0 || y>=this.grid[0]) throw new Error("x, y not in range");
+        if (nowBlock.blockType !== "water") return;
+
+
+        if (x === this.grid.length-1) {
+            return;
+        } else if (this.grid[x+1][y].blockType !== "stone") {
+            if (this.grid[x+1][y].blockType === "air") {
+                this.grid[x+1][y].initWater(7, 7);
+            } else if (this.grid[x+1][y].blockType === "water") {
+                this.grid[x+1][y].heighten(7, 7);
+                //hsidofisd
+            } else {
+                throw new Error("strange error 1");
+            }
+        } else {
+            if (y > 0) {
+                if (this.grid[x][y-1].blockType === "air") {
+                    this.grid[x][y-1].initWater(nowBlock.waterLevel[0] - 1, nowBlock.waterLevel[0]);
+                } else {
+                    this.grid[x][y-1].heighten(nowBlock.waterLevel[0] - 1, nowBlock.waterLevel[0]);
+                }
             }
             if (y < this.grid[x].length - 1) {
                 if (this.grid[x][y+1].blockType === "air") {
-                    console.log(this.grid[x][y+1]);
-                    console.log(this.grid[x][y+1].initWater(nowBlock.waterLevel[1], nowBlock.waterLevel[1] - 1));
                     this.grid[x][y+1].initWater(nowBlock.waterLevel[1], nowBlock.waterLevel[1] - 1);
                 } else {
                     this.grid[x][y+1].heighten(nowBlock.waterLevel[1], nowBlock.waterLevel[1] - 1);
@@ -193,7 +229,7 @@ class GameGrid {
 //shouldnt this be grid[y][x]?
     placeWater(x, y) {
         this.notupdated = true;
-        if (x !== 0) throw "you can only place water at top row";
+        if (x !== 0) throw new Error("you can only place water at top row");
         if (this.grid[x+1][y].blockType === "stone") {
             this.grid[x][y].initWater(7, 7);
         } else {
@@ -211,9 +247,9 @@ class GameGrid {
         return false
     }
 
-    placeBlock(x, y, material) {
+    /*placeBlock(x, y, material) {
         this.grid[y][x] = new Block(material);
-    }
+    }*/
     getIndex(x, y) {
         return (
           this.grid[y][x]
