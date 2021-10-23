@@ -125,11 +125,11 @@ for(var i=0; i<10; i++) {
 }
 
 function placeWater(grid, x, y) {
-    grid[x][y] = 2;
+    grid[y][x] = 2;
 }
 // test code end
 
 
 function placeBlock(grid, x, y) {
-	grid[x][y] = 1;
+	grid[y][x] = 1;
 }
