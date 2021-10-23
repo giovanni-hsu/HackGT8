@@ -65,10 +65,10 @@ class GameGrid {
                 this.bucketGrid[i][j] = new Block("air");
             }
         }
-        for (source in sourceArray) {
+        for (let source in sourceArray) {
             this.bucketGrid[0][source] = new Block("water");
         }
-        for (exit in exitArray) {
+        for (let exit in exitArray) {
             this.bucketGrid[1][exit] = new Block("buck");
         }
     }
@@ -148,6 +148,16 @@ class GameGrid {
           this.grid[y][x]
         )
       }
+
+    getMatGrid(objectGrid) {
+        var newGrid = new Array(this.size);
+        for (let i = 0; i < objectGrid.length; i++) {
+            for (let j = 0; j < objectGrid.length; j++) {
+                newGrid[i][j] = objectGrid[i][j].blockType;
+            }
+        }
+        return newGrid;
+    }
 }
 
 export default GameGrid
