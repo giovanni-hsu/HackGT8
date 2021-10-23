@@ -1,4 +1,4 @@
-/**Types of blocks: "air"; "stone"; "water"; "fixw"; "buck" "obsi"
+/**Types of blocks: "air"; "stone"; "water"; "fixw"; "buck"; "obsi"
  * 0 Air
  * 1 Stone
  * 2 Water
