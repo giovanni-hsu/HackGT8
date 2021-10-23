@@ -2,7 +2,7 @@ import { div } from 'prelude-ls';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import './GameLogic.js';
+import GameGrid from './GameLogic.js';
 
 const blockDict = {
   'stone': {
@@ -29,7 +29,10 @@ class Square extends React.Component {
   render() {
     console.log(this.props.material);
     return (
-      <button className={"square"} onClick={() => this.state.material !== this.setState({material: this.state.material !== 'stone' ? 'stone' : 'empty'})}>
+      <button className={"square"} onClick={() => {
+        this.props.grid.placeStone(this.props.x, this.props.y); 
+        this.setState({material: this.state.material !== 'stone' ? 'stone' : 'empty'})}
+        }>
         <div className={"material " + this.state.material}></div>
       </button>
     );
@@ -37,8 +40,8 @@ class Square extends React.Component {
 }
   
 class Board extends React.Component {
-    renderSquare(material) {
-      return <Square material={material}/>;
+    renderSquare(material, x, y) {
+      return <Square material={material} x={x} y={y} grid={this.props.grid}/>;
     }
 
     renderInitGrid(width, height) {
@@ -50,13 +53,17 @@ class Board extends React.Component {
         }
           grid.push(currentRow);
       }
-
-      return grid.map((row, rowId) => {
+      let columnIndex = -1;
+      let rowIndex = -1;
+      return grid.map((row) => {
+        columnIndex++;
+        rowIndex = -1;
         return (
-          <div className="board-row" key={rowId}>
-              {row.map((block, index) => {
+          <div className="board-row" key={columnIndex}>
+              {row.map((block) => {
+                rowIndex++;
                 return (
-                  this.renderSquare(block.material, index)
+                  this.renderSquare(block.material, rowIndex, columnIndex)
                 );
               })}
           </div>
@@ -85,7 +92,7 @@ class Board extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        grid: intializeGrid(props.size),
+        grid: new GameGrid(props.size),
         waterStart: props.waterStart,
         waterEnd: props.waterEnd,
       }
@@ -93,14 +100,15 @@ class Board extends React.Component {
     }
 
     startWater() {
-      placeWater(this.state.grid, this.state.waterStart.x, this.state.waterStart.y);
-      while(!done(this.state.grid)) {
-        updateWater();
+      console.log(this.state);
+      this.state.grid.placeWater(this.state.waterStart.x, this.state.waterStart.y);
+      while(!this.state.grid.done()) {
+        setTimeout(() => {  this.updateWater(); }, 2000);
       }
     }
 
     updateWater() {
-      updateGrid(this.state.grid);
+      this.state.grid.updateGrid();
       this.setState({grid: this.state.grid});
     }
 
@@ -108,7 +116,7 @@ class Board extends React.Component {
       return (
         <div className="game">
           <div className="game-board">
-            <Board />
+            <Board grid={this.state.grid}/>
           </div>
           <button onClick={() => {this.startWater()}}>Start water</button>
         </div>
@@ -119,7 +127,7 @@ class Board extends React.Component {
   // ========================================
   
   ReactDOM.render(
-    <Game />,
+    <Game size={8} waterStart={{x:0,y:0}}/>,
     document.getElementById('root')
   );
   

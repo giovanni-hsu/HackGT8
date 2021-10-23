@@ -8,103 +8,96 @@
 /** Function takes in grid, coordinates and type of block to be placed
  * returns boolean representing success / failure
  */
-function placeBlock(grid, x, y, type) {
-	if (grid[x][y] == 0) {
-		grid[x][y] = type;
-		return true;
-	} else {
-		return false;
-	}
-}
+class GameGrid {
 
-/** Function takes in grid and replaces water blocks with air blocks
- */
-function resetGrid(grid) {
-	for (let x = 0; x < grid.length; x++) {
-		for (let y = 0; y < grid.length; y++) {
-			if (grid[x][y] == 2) {
-				grid[x][y] = 0;
-			}
-		}
-	}
-}
+    constructor(size) {
+        this.size = size;
+        this.grid = this.intializeGrid(size);
+        this.numToIcon = {0:" ", 1:"#", 2:"o", 3:"o"};
+    }
 
-function intializeGrid(size) {
-    var grid = new Array(size);
-    for (var i = 0; i < size; i++) {
-        grid[i] = new Array(size);
-        for(var j=0; j<size; j++) {
-            grid[i][j] = 0;
+    placeBlock(x, y, type) {
+        if (this.grid[x][y] === 0) {
+            this.grid[x][y] = type;
+            return true;
+        } else {
+            return false;
         }
     }
-    return grid;
-}
 
-const numToIcon = {0:" ", 1:"#", 2:"o", 3:"o"};
-
-function printGrid(grid) {
-    process.stdout.write("----------------\n");
-    for(var i=0; i<grid.length; i++) {
-        for(var j=0; j<grid[i].length; j++) {
-            process.stdout.write(numToIcon[grid[i][j]] + " ");
-        }
-        process.stdout.write("|\n");
-    }
-    process.stdout.write("----------------\n");
-}
-
-function updateGrid(grid) {
-    for(var i=0; i<grid.length-1; i++) {
-        for(var j=0; j<grid[i].length; j++) {
-            if (grid[i][j] == 2) {
-                if (grid[i+1][j] == 0) {
-                    grid[i+1][j] = 4;
-                } else if (grid[i+1][j] == 1) {
-                    if (grid[i][j-1] == 0) grid[i][j-1] = 4;
-                    if (grid[i][j+1] == 0) grid[i][j+1] = 4;
+    /** Function takes in grid and replaces water blocks with air blocks
+     */
+    resetGrid() {
+        for (let x = 0; x <  this.grid.length; x++) {
+            for (let y = 0; y <  this.grid.length; y++) {
+                if ( this.grid[x][y] === 2) {
+                     this.grid[x][y] = 0;
                 }
-                grid[i][j] = 3;
             }
         }
     }
-    for(var i=0; i<grid.length; i++) {
-        for(var j=0; j<grid[i].length; j++) {
-            if (grid[i][j] == 4) grid[i][j] = 2;
+
+    intializeGrid() {
+        var grid = new Array(this.size);
+        for (var i = 0; i < this.size; i++) {
+            grid[i] = new Array(this.size);
+            for(var j=0; j<this.size; j++) {
+                grid[i][j] = 0;
+            }
         }
+        return grid;
     }
-    
-}
 
-// test code start
-var grid = intializeGrid();
-placeWater(grid, 0, 2);
-placeWater(grid, 0, 6);
-placeBlock(grid, 3, 2);
-placeBlock(grid, 3, 3);
-placeBlock(grid, 4, 4);
-placeBlock(grid, 4, 6);
-placeBlock(grid, 4, 7);
-printGrid(grid);
-
-for(var i=0; i<10; i++) {
-    updateGrid(grid);   
-    printGrid(grid);
-}
-
-function placeWater(grid, x, y) {
-    grid[x][y] = 2;
-}
-// test code end
-
-function done(grid) {
-    for (let i = 0; i < grid[0].length; i++) {
-        if (grid[grid.length][i] === 2 || grid[grid.length][i] === 3) {
-            return true
+    printGrid() {
+        process.stdout.write("----------------\n");
+        for(var i=0; i< this.grid.length; i++) {
+            for(var j=0; j< this.grid[i].length; j++) {
+                process.stdout.write(this.numToIcon[this.grid[i][j]] + " ");
+            }
+            process.stdout.write("|\n");
         }
+        process.stdout.write("----------------\n");
     }
-    return false
+
+    updateGrid() {
+        for(var i=0; i< this.grid.length-1; i++) {
+            for(var j=0; j< this.grid[i].length; j++) {
+                if ( this.grid[i][j] === 2) {
+                    if ( this.grid[i+1][j] === 0) {
+                         this.grid[i+1][j] = 4;
+                    } else if ( this.grid[i+1][j] === 1) {
+                        if ( this.grid[i][j-1] === 0)  this.grid[i][j-1] = 4;
+                        if ( this.grid[i][j+1] === 0)  this.grid[i][j+1] = 4;
+                    }
+                     this.grid[i][j] = 3;
+                }
+            }
+        }
+        for(i=0; i< this.grid.length; i++) {
+            for(j=0; j< this.grid[i].length; j++) {
+                if ( this.grid[i][j] === 4)  this.grid[i][j] = 2;
+            }
+        }
+        
+    }
+//shouldnt this be grid[y][x]?
+    placeWater(x, y) {
+         this.grid[x][y] = 2;
+    }
+    // test code end
+
+    done() {
+        for (let i = 0; i <  this.grid[0].length; i++) {
+            if ( this.grid[this.grid.length-1][i] === 2 ||  this.grid[this.grid.length-1][i] === 3) {
+                return true
+            }
+        }
+        return false
+    }
+
+    placeStone(x, y) {
+        this.grid[x][y] = 1;
+    }
 }
 
-function placeBlock(grid, x, y) {
-	grid[x][y] = 1;
-}
+export default GameGrid
