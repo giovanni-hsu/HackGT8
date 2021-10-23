@@ -183,7 +183,7 @@ class GameGrid {
     updateAllBlock() {
         for(let i=0; i< this.grid.length; i++) {
             for(let j=0; j< this.grid[i].length; j++) {
-                this.gird[i][j].update();
+                this.grid[i][j].update();
             }
         }
         this.notupdated = false;
