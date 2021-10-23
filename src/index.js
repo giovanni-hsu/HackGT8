@@ -122,6 +122,12 @@ class Board extends React.Component {
         </div>
       );
     }
+
+    getIndex(x, y) {
+      return (
+        this.grid[x][y]
+      )
+    }
   }
   
   // ========================================
