@@ -112,6 +112,10 @@ class GameGrid {
         }
         
     }
+    updateBlock(x, y) {
+        if (this.grid[x][y] === )
+    }
+
 //shouldnt this be grid[y][x]?
     placeWater(x, y) {
          this.grid[y][x] = 2;
