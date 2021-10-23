@@ -17,6 +17,12 @@ const blockDict = {
   3: {
     'material' : 'water',
   },
+  4: {
+    'material' : 'left-corner-water'
+  },
+  5: {
+    'material' : 'right-corner-water'
+  }
 
 };
 
@@ -76,7 +82,7 @@ class Board extends React.Component {
 
     render() {
       const status = 'Poggers';
-      const renderedGrid = this.renderInitGrid(8, 8);
+      const renderedGrid = this.renderInitGrid(this.props.size, this.props.size);
       console.log("Renders");
 
       return (
@@ -96,15 +102,14 @@ class Board extends React.Component {
       this.waterInterval = null;
       this.state = {
         grid: new GameGrid(props.size),
-        waterStart: props.waterStart,
-        waterEnd: props.waterEnd,
       }
       
     }
 
     startWater() {
       console.log(this.state);
-      this.state.grid.placeWater(this.state.waterStart.x, this.state.waterStart.y);
+      this.state.grid.initBucketGrid(this.props.size, this.props.waterStart[0], this.props.waterEnd[0]);
+      this.state.grid.placeWater(this.state.waterStart, 0);
       this.waterInterval = setInterval(() => {this.updateWater(this)}, 700);
     }
 
@@ -113,6 +118,7 @@ class Board extends React.Component {
       game.setState({grid: game.state.grid});
       if (game.state.grid.done()) {
         clearInterval(game.waterInterval);
+        console.log(game.state.grid.checkForWin());
       }
     }
 
@@ -131,7 +137,7 @@ class Board extends React.Component {
   // ========================================
   
   ReactDOM.render(
-    <Game size={8} waterStart={{x:0,y:0}}/>,
+    <Game size={8} waterStart={[0]} waterEnd={[5]}/>,
     document.getElementById('root')
   );
   
