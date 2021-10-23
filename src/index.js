@@ -108,7 +108,7 @@ class Board extends React.Component {
 
     startWater() {
       console.log(this.state);
-      this.state.grid.initBucketGrid(this.props.size, this.props.waterStart[0], this.props.waterEnd[0]);
+      this.state.grid.initBucketGrid(this.props.size, this.props.waterStart, this.props.waterEnd);
       this.state.grid.placeWater(this.props.waterStart[0], 0);
       this.waterInterval = setInterval(() => {this.updateWater(this)}, 700);
     }
