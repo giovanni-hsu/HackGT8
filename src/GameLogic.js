@@ -98,6 +98,11 @@ class GameGrid {
     placeStone(x, y) {
         this.grid[x][y] = 1;
     }
+    getIndex(x, y) {
+        return (
+          this.grid[x][y]
+        )
+      }
 }
 
 export default GameGrid
