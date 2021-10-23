@@ -240,6 +240,22 @@ class GameGrid {
     // test code end
 
     done() { //check sides, check split paths
+        for(var x=0; x< this.grid.length; x++) {
+            for(var y=0; y< this.grid[x].length; y++) {
+                if (this.grid[x][y].blockType !== "water") continue;
+                if (x === this.grid.length-1) continue;
+                if (this.grid[x+1][y].blockType === "air") return false;
+                else if (this.grid[x+1][y].blockType === "stone") {
+                    if (y > 0) {
+                        if (this.grid[x][y-1].blockType === "air") return false
+                    }
+                    if (y < this.grid[x].length - 1) {
+                        if (this.grid[x][y+1].blockType === "air") return false
+                    }
+                }
+            }
+        }
+        return true
         for (let i = 0; i <  this.grid[0].length; i++) {
             if ( this.grid[this.grid.length-1][i].blockType === "water" ||  this.grid[this.grid.length-1][i].blockType === "fixw") {
                 return true
