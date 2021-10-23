@@ -111,6 +111,8 @@ class Board extends React.Component {
     updateWater(game) {
       game.state.grid.updateGrid();
       game.setState({grid: game.state.grid});
+      console.log(game.state.grid);
+      console.log(game.state.grid.done());
       if (game.state.grid.done()) {
         clearInterval(game.waterInterval);
       }

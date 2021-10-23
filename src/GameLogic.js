@@ -8,7 +8,7 @@
 /** Function takes in grid, coordinates and type of block to be placed
  * returns boolean representing success / failure
  */
-class GameGrid {
+ class GameGrid {
 
     constructor(size) {
         this.size = size;
@@ -67,13 +67,14 @@ class GameGrid {
     /** Function returns boolean if block above bucket has water, representing win
     */
     checkForWin(grid, bucketGrid) {
-        for (i = 0; i < bucketGrid[1].length; i++) {
-            if (i == 4) {
-                let bucketLoc = i;
+        let bucketLoc
+        for (let i = 0; i < bucketGrid[1].length; i++) {
+            if (i === 4) {
+                bucketLoc = i;
             }
         }
         let previousBlock = grid[grid.length-1][bucketLoc];
-        if (previousBlock == 2 || previousBlock == 3) {
+        if (previousBlock === 2 || previousBlock === 3) {
             return true;
         }
         return false;
@@ -118,13 +119,15 @@ class GameGrid {
     }
     // test code end
 
-    done() { //check sides, check split paths
-        for (let i = 0; i <  this.grid[0].length; i++) {
-            if ( this.grid[this.grid.length-1][i] === 2 ||  this.grid[this.grid.length-1][i] === 3) {
-                return true
+    done() { //check sides, check split paths, never touch bottom
+        for ( let i = 0; i < this.grid.length - 1; i++) {
+            for( let j = 0; j < this.grid[0].length; j++) {
+                if( this.grid[i][j] === 2) {
+                    return false;
+                }
             }
         }
-        return false
+        return true;
     }
 
     placeStone(x, y) {
