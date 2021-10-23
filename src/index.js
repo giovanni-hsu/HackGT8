@@ -31,9 +31,11 @@ class Board extends React.Component {
           grid.push(currentRow);
       }
 
-      grid.map((row, rowId) => {
+      console.log(grid);
+
+      return grid.map((row, rowId) => {
         return (
-          <div class="board-row" key={rowId}>
+          <div className="board-row" key={rowId}>
               {row.map((color, index) => {
                 return (
                   this.renderSquare(color, index)
@@ -47,7 +49,8 @@ class Board extends React.Component {
 
     render() {
       const status = 'Poggers';
-      const renderedGrid = this.renderGrid(8, 8)
+      const renderedGrid = this.renderGrid(8, 8);
+      console.log(renderedGrid);
 
       return (
         <div>
