@@ -1,23 +1,8 @@
+import { div } from 'prelude-ls';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-function space() {
-  return {
-    color: 'white'
-  }
-}
-
-const grid = [
-    space(),
-    space(),
-    space(),
-    space(),
-    space(),
-    space(),
-    space(),
-    space(),
-]
 
 class Square extends React.Component {
     render() {
@@ -30,33 +15,45 @@ class Square extends React.Component {
   }
   
 class Board extends React.Component {
-    renderSquare(i) {
+    renderSquare(color, i) {
       return <Square />;
     }
 
+    renderGrid(width, height) {
+      const grid = [];
+      for (let row = 0; row < width; row++) {
+        const currentRow = [];
+        for (let col = 0; col < height; col++) {
+          currentRow.push({
+            color: 'white'
+          });
+        }
+          grid.push(currentRow);
+      }
+
+      grid.map((row, rowId) => {
+        return (
+          <div class="board-row" key={rowId}>
+              {row.map((color, index) => {
+                return (
+                  this.renderSquare(color, index)
+                );
+              })}
+          </div>
+        )
+      });
+
+    }
+
     render() {
-      const status = 'Next player: X';
+      const status = 'Poggers';
+      const renderedGrid = this.renderGrid(8, 8)
 
       return (
         <div>
           <div className="status">{status}</div>
-          
-          <div className="board-row">
-            {this.renderSquare(0)}
-            {this.renderSquare(1)}
-            {this.renderSquare(2)}
-            {this.renderSquare(3)}
-          </div>
-          <div className="board-row">
-            {this.renderSquare(3)}
-            {this.renderSquare(4)}
-            {this.renderSquare(5)}
-          </div>
-          <div className="board-row">
-            {this.renderSquare(6)}
-            {this.renderSquare(7)}
-            {this.renderSquare(8)}
-          </div>
+
+          {renderedGrid}
         </div>
       );
     }
