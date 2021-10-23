@@ -53,6 +53,7 @@ function isZero(a) {
     }
     return true;
 }
+console.log(findSolution([1,0,0,1,0,0,1,1], [[],["buck",null,"buck",null,null,null,null,null]]))
 function findSolution(waterStatusArray, bucketGrid) {
     bestScore = [0, 0];
     var score;
