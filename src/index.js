@@ -18,11 +18,18 @@ const blockDict = {
 
 class Square extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      material: props.material,
+    };
+  }
+
   render() {
     console.log(this.props.material);
     return (
-      <button className={"square " + this.props.material} >
-        {/* TODO */}
+      <button className={"square"} onClick={() => this.setState({material: 'stone'})}>
+        <div className={"material " + this.state.material}></div>
       </button>
     );
   }
