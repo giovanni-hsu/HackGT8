@@ -93,6 +93,7 @@ class Board extends React.Component {
 
     constructor(props) {
       super(props);
+      this.waterInterval = null;
       this.state = {
         grid: new GameGrid(props.size),
         waterStart: props.waterStart,
@@ -104,15 +105,15 @@ class Board extends React.Component {
     startWater() {
       console.log(this.state);
       this.state.grid.placeWater(this.state.waterStart.x, this.state.waterStart.y);
-      while(!this.state.grid.done()) {
-        this.updateWater();
-      }
+      this.waterInterval = setInterval(() => {this.updateWater(this)}, 700);
     }
 
-    updateWater() {
-      console.log('running');
-      this.state.grid.updateGrid();
-      this.setState({grid: this.state.grid});
+    updateWater(game) {
+      game.state.grid.updateGrid();
+      game.setState({grid: game.state.grid});
+      if (game.state.grid.done()) {
+        clearInterval(game.waterInterval);
+      }
     }
 
     render() {
