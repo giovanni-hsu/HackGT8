@@ -9,17 +9,6 @@ function space() {
   }
 }
 
-const grid = [];
-for (let row = 0; row < GRID_ROW_LENGTH; row++) {
-  const currentRow = [];
-  for (let col = 0; col < GRID_COL_LENGTH; col++) {
-    currentRow.push({
-      color: 'white'
-    });
-  }
-    grid.push(currentRow);
-}
-
 
 class Square extends React.Component {
     render() {
@@ -37,6 +26,17 @@ class Board extends React.Component {
     }
 
     renderGrid(width, height) {
+      const grid = [];
+      for (let row = 0; row < width; row++) {
+        const currentRow = [];
+        for (let col = 0; col < height; col++) {
+          currentRow.push({
+            color: 'white'
+          });
+        }
+          grid.push(currentRow);
+      }
+
       grid.map((row, rowId) => {
         return (
           <div class="board-row" key={rowId}>
