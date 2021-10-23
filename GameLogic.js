@@ -75,6 +75,7 @@ function updateGrid(grid) {
     }
 }
 
+// test code start
 var grid = intializeGrid();
 placeWater(grid, 0, 2);
 placeWater(grid, 0, 6);
@@ -90,10 +91,12 @@ for(var i=0; i<10; i++) {
     printGrid(grid);
 }
 
-function placeBlock(grid, x, y) {
-	grid[x][y] = 1;
-}
-
 function placeWater(grid, x, y) {
     grid[x][y] = 2;
+}
+// test code end
+
+
+function placeBlock(grid, x, y) {
+	grid[x][y] = 1;
 }
