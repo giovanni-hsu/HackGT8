@@ -13,7 +13,12 @@ class GameGrid {
     constructor(size) {
         this.size = size;
         this.grid = this.intializeGrid(size);
+        this.bucketGrid = null;
         this.numToIcon = {"air":" ", "stone":"#", "water":"o", "fixw":"o"};
+    }
+
+    getSize() {
+        return this.size;
     }
 
     placeBlock(x, y, type) {
@@ -53,20 +58,19 @@ class GameGrid {
      */
     initBucketGrid(size, sourceArray, exitArray) {
         const HEIGHT = 2;
-        var grid = new Array(HEIGHT);
+        this.bucketGrid = new Array(HEIGHT);
         for (var i = 0; i < HEIGHT; i++) {
-            grid[i] = new Array(size);
+            this.bucketGrid[i] = new Array(size);
             for(var j=0; j<size; j++) {
-                grid[i][j] = "air";
+                this.bucketGrid[i][j] = "air";
             }
         }
         for (source in sourceArray) {
-            grid[0][source] = "water";
+            this.bucketGrid[0][source] = "water";
         }
         for (exit in exitArray) {
-            grid[1][exit] = "buck";
+            this.bucketGrid[1][exit] = "buck";
         }
-        return grid;
     }
     /** Function returns boolean if block above bucket has water, representing win
     */
