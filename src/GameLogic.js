@@ -86,7 +86,7 @@ class GameGrid {
             }
         }
         let previousBlock = grid[grid.length-1][bucketLoc].blockType;
-        if (previousBlock === "water" || previousBlock == "fixw") {
+        if (previousBlock === "water" || previousBlock === "fixw") {
             return true;
         }
         return false;
@@ -140,15 +140,15 @@ class GameGrid {
     }
     updateNeighborBlock(x, y) {
         let nowBlock = this.grid[x][y];
-        if (nowBlock.blockType != "water") return;
+        if (nowBlock.blockType !== "water") return;
         if (nowBlock.downFlow) {
             if (x+1 >= this.grid.length) return; // last row
-            if (x+2 >= this.grid.length || this.grid[x+2][y].blockType == "air" || this.grid[x+2][y].blockType == "water") {
+            if (x+2 >= this.grid.length || this.grid[x+2][y].blockType === "air" || this.grid[x+2][y].blockType === "water") {
                 this.grid[x+1][y].initDownFlowWater();
-            } else if (this.grid[x+2][y].blockType == "stone") {
-                if (this.grid[x+1][y].blockType == "air") {
+            } else if (this.grid[x+2][y].blockType === "stone") {
+                if (this.grid[x+1][y].blockType === "air") {
                     this.grid[x+1][y].initWater(7, 7);
-                } else if (this.grid[x+1][y].blockType == "water") {
+                } else if (this.grid[x+1][y].blockType === "water") {
                     this.grid[x+1][y].heighten(7, 7);
                     //hsidofisd
                 } else {
@@ -158,11 +158,11 @@ class GameGrid {
                 throw "unknown block type";
             }
         } else {
-            if (x == this.grid.length-1 || this.grid[x+1][y].blockType != "stone")  {
+            if (x === this.grid.length-1 || this.grid[x+1][y].blockType !== "stone")  {
                 this.grid[x+1][y].initDownFlowWater();
             } else {
                 if (y > 0) {
-                    if (this.grid[x][y-1].blockType == "air") {
+                    if (this.grid[x][y-1].blockType === "air") {
                         this.grid[x][y-1].initWater(nowBlock.waterLevel[0] - 1, nowBlock.waterLevel[0]);
                     } else {
                         this.grid[x][y-1].heighten(nowBlock.waterLevel[0] - 1, nowBlock.waterLevel[0]);
@@ -170,7 +170,7 @@ class GameGrid {
                 }
             }
             if (y < this.grid[x].length - 1) {
-                if (this.grid[x][y+1].blockType == "air") {
+                if (this.grid[x][y+1].blockType === "air") {
                     console.log(this.grid[x][y+1]);
                     console.log(this.grid[x][y+1].initWater(nowBlock.waterLevel[1], nowBlock.waterLevel[1] - 1));
                     this.grid[x][y+1].initWater(nowBlock.waterLevel[1], nowBlock.waterLevel[1] - 1);
@@ -193,8 +193,8 @@ class GameGrid {
 //shouldnt this be grid[y][x]?
     placeWater(x, y) {
         this.notupdated = true;
-        if (x != 0) throw "you can only place water at top row";
-        if (this.grid[x+1][y].blockType == "stone") {
+        if (x !== 0) throw "you can only place water at top row";
+        if (this.grid[x+1][y].blockType === "stone") {
             this.grid[x][y].initWater(7, 7);
         } else {
             this.grid[x][y].initDownFlowWater();
