@@ -82,8 +82,8 @@ class Board extends React.Component {
 
     render() {
       const status = 'Poggers';
-      const renderedGrid = this.renderInitGrid(this.props.size, this.props.size);
-      console.log("Renders");
+      const renderedGrid = this.renderInitGrid(this.props.grid.getSize(), this.props.grid.getSize());
+      console.log("Rendered");
 
       return (
         <div>
@@ -109,7 +109,7 @@ class Board extends React.Component {
     startWater() {
       console.log(this.state);
       this.state.grid.initBucketGrid(this.props.size, this.props.waterStart[0], this.props.waterEnd[0]);
-      this.state.grid.placeWater(this.state.waterStart, 0);
+      this.state.grid.placeWater(this.props.waterStart[0], 0);
       this.waterInterval = setInterval(() => {this.updateWater(this)}, 700);
     }
 

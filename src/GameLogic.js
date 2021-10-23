@@ -13,7 +13,12 @@ class GameGrid {
     constructor(size) {
         this.size = size;
         this.grid = this.intializeGrid(size);
+        this.bucketGrid = null;
         this.numToIcon = {0:" ", 1:"#", 2:"o", 3:"o"};
+    }
+
+    getSize() {
+        return this.size;
     }
 
     placeBlock(x, y, type) {
@@ -53,27 +58,28 @@ class GameGrid {
      */
     initBucketGrid(size, source, exit) {
         const HEIGHT = 2;
-        var grid = new Array(HEIGHT);
+        this.bucketGrid = new Array(HEIGHT);
         for (var i = 0; i < HEIGHT; i++) {
-            grid[i] = new Array(size);
+            this.bucketGrid[i] = new Array(size);
             for(var j=0; j<size; j++) {
-                grid[i][j] = 5;
+                this.bucketGrid[i][j] = 5;
             }
         }
-        grid[0][source] = 3;
-        grid[1][exit] = 4;
-        return grid;
+        this.bucketGrid[0][source] = 3;
+        this.bucketGrid[1][exit] = 4;
+        return this.bucketGrid;
     }
     /** Function returns boolean if block above bucket has water, representing win
     */
-    checkForWin(grid, bucketGrid) {
-        for (i = 0; i < bucketGrid[1].length; i++) {
-            if (i == 4) {
-                let bucketLoc = i;
+    checkForWin() {
+        let bucketLoc = 0;
+        for (let i = 0; i < this.bucketGrid[1].length; i++) {
+            if (i === 4) {
+                bucketLoc = i;
             }
         }
-        let previousBlock = grid[grid.length-1][bucketLoc];
-        if (previousBlock == 2 || previousBlock == 3) {
+        let previousBlock = this.grid[this.grid.length-1][bucketLoc];
+        if (previousBlock === 2 || previousBlock === 3) {
             return true;
         }
         return false;
