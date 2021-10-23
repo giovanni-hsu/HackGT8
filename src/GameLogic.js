@@ -121,8 +121,58 @@ class GameGrid {
         }
         
     }
-    updateBlock(x, y) {
-        if (this.grid[x][y] != "water")
+    updateGrid() {
+        updateAllNeighborBlock();
+        updateAllBlock();
+    }
+    updateAllNeighborBlock() {
+        for(i=0; i< this.grid.length; i++) {
+            for(j=0; j< this.grid[i].length; j++) {
+                this.updateNeighborBlock(i, j);
+            }
+        }
+    }
+    updateNeighborBlock(x, y) {
+        Block nowBlock = this.grid[x][y];
+        if (nowBlock.blockType != "water") return;
+        if (nowBlock.downFlow) {
+            if (x+1 >= this.grid.length) return; // last row
+            if (x+2 >= this.grid.length || this.grid[x+2][y].blockType == "air" || this.grid[x+2][y].blockType == "water") {
+                this.grid[x+1][y].initDownFlowWater();
+            } else if (this.grid[x+2][y].blockType == "stone") {
+                if (this.grid[x+1][y].blockType == "air") {
+                    this.grid[x+1][y].initWater(7, 7);
+                } else if (this.grid[x+1][y].blockType == "water") {
+                    this.grid[x+1][y].heighten(7, 7);
+                } else {
+                    throw "strange error 1"
+                }
+            } else {
+                throw "unknown block type";
+            }
+        } else {
+            if (y > 0) {
+                if (this.grid[x][y-1].blockType == "air") {
+                    this.grid[x][y-1].initWater(nowBlock.waterLevel[0] - 1, nowBlock.waterLevel[0]);
+                } else {
+                    this.grid[x][y-1].heighten(nowBlock.waterLevel[0] - 1, nowBlock.waterLevel[0]);
+                }
+            }
+            if (y < this.grid[x].length - 1) {
+                if (this.grid[x][y+1].blockType == "air") {
+                    this.grid[x][y+1].initWater(nowBlock.waterLevel[1], nowBlock.waterLevel[1] - 1);
+                } else {
+                    this.grid[x][y+1].heighten(nowBlock.waterLevel[1], nowBlock.waterLevel[1] - 1);
+                }
+            }
+        }
+    }
+    updateAllBlock() {
+        for(i=0; i< this.grid.length; i++) {
+            for(j=0; j< this.grid[i].length; j++) {
+                this.gird[i][j].update();
+            }
+        }
     }
 
 //shouldnt this be grid[y][x]?
