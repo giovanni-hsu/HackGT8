@@ -35,6 +35,7 @@ body {
   .material {
     width: 100%;
     height: 100%;
+    image-rendering: pixelated;
   }
 
   .air {
@@ -42,12 +43,13 @@ body {
   }
 
   .stone {
-    background: rgb(104, 104, 104);  
+    background: rgb(104, 104, 104); 
+    background-image: url('assets/cobblestone.png');
+    background-size: contain; 
   }
 
   .water {
-    background-color: rgba(0, 37, 200, 0.637); /* Tint color */
-    background-blend-mode: multiply;
+    background: #fff;
     background-size: contain;
   }
   
