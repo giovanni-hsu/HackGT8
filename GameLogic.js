@@ -73,7 +73,7 @@ function intializeGrid() {
     return grid;
 }
 
-const numToIcon = {0:" ", 1:"#", 2:"o", 3:"o"};
+const numToIcon = {0:" ", 1:"#", 2:"x", 3:"o"};
 
 function printGrid(grid) {
     process.stdout.write("----------------\n");
@@ -116,6 +116,7 @@ placeBlock(grid, 3, 3);
 placeBlock(grid, 4, 4);
 placeBlock(grid, 4, 6);
 placeBlock(grid, 4, 7);
+placeBlock(grid, 7, 5);
 printGrid(grid);
 
 for(var i=0; i<10; i++) {
