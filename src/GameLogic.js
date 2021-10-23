@@ -29,12 +29,11 @@ function resetGrid(grid) {
 	}
 }
 
-function intializeGrid() {
-    const SIZE = 8;
-    var grid = new Array(SIZE);
-    for (var i = 0; i < SIZE; i++) {
-        grid[i] = new Array(SIZE);
-        for(var j=0; j<SIZE; j++) {
+function intializeGrid(size) {
+    var grid = new Array(size);
+    for (var i = 0; i < size; i++) {
+        grid[i] = new Array(size);
+        for(var j=0; j<size; j++) {
             grid[i][j] = 0;
         }
     }
@@ -88,8 +87,7 @@ placeBlock(grid, 4, 7);
 printGrid(grid);
 
 for(var i=0; i<10; i++) {
-    updateGrid(grid);
-    displayGrid(grid);
+    updateGrid(grid);   
     printGrid(grid);
 }
 

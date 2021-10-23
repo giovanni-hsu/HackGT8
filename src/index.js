@@ -2,6 +2,7 @@ import { div } from 'prelude-ls';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import './GameLogic.js';
 
 const blockDict = {
   'stone': {
@@ -28,7 +29,7 @@ class Square extends React.Component {
   render() {
     console.log(this.props.material);
     return (
-      <button className={"square"} onClick={() => this.setState({material: 'stone'})}>
+      <button className={"square"} onClick={() => this.state.material !== this.setState({material: this.state.material !== 'stone' ? 'stone' : 'empty'})}>
         <div className={"material " + this.state.material}></div>
       </button>
     );
@@ -80,16 +81,36 @@ class Board extends React.Component {
   }
   
   class Game extends React.Component {
+
+    constructor(props) {
+      super(props);
+      this.state = {
+        grid: intializeGrid(props.size),
+        waterStart: props.waterStart,
+        waterEnd: props.waterEnd,
+      }
+      
+    }
+
+    startWater() {
+      placeWater(this.state.grid, this.state.waterStart.x, this.state.waterStart.y);
+      while(!done(this.state.grid)) {
+        updateWater();
+      }
+    }
+
+    updateWater() {
+      updateGrid(this.state.grid);
+      this.setState({grid: this.state.grid});
+    }
+
     render() {
       return (
         <div className="game">
           <div className="game-board">
             <Board />
           </div>
-          <div className="game-info">
-            <div>{/* status */}</div>
-            <ol>{/* TODO */}</ol>
-          </div>
+          <button onClick={() => {this.startWater()}}>Start water</button>
         </div>
       );
     }
