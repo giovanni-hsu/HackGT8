@@ -18,7 +18,7 @@ body {
   }
   
   .square {
-    background: #fff;
+    background: #000;
     border: 1px solid #999;
     float: left;
     font-size: 24px;
@@ -30,6 +30,23 @@ body {
     padding: 0;
     text-align: center;
     width: 34px;
+  }
+
+  .material {
+    width: 100%;
+    height: 100%;
+  }
+
+  .empty {
+    background: #fff;
+  }
+
+  .stone {
+    background: rgb(104, 104, 104);  
+  }
+
+  .water {
+    background: rgb(92, 126, 190);  
   }
   
   .square:focus {

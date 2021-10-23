@@ -3,14 +3,16 @@
  * 1 Stone
  * 2 Water
  * 3 Fixed water
+ * 4 bucket
+ * 5 obsidian
  */
 
 /** Function takes in grid, coordinates and type of block to be placed
  * returns boolean representing success / failure
  */
 function placeBlock(grid, x, y, type) {
-	if (grid[x][y] == 0) {
-		grid[x][y] = type;
+	if (grid[y][x] == 0) {
+		grid[y][x] = type;
 		return true;
 	} else {
 		return false;
@@ -20,13 +22,43 @@ function placeBlock(grid, x, y, type) {
 /** Function takes in grid and replaces water blocks with air blocks
  */
 function resetGrid(grid) {
-	for (let x = 0; x < grid.length; x++) {
-		for (let y = 0; y < grid.length; y++) {
-			if (grid[x][y] == 2) {
-				grid[x][y] = 0;
+	for (let y = 0; y < grid.length; x++) {
+		for (let x = 0; x < grid.length; y++) {
+			if (grid[y][x] == 2) {
+				grid[y][x] = 0;
 			}
 		}
 	}
+}
+/** Function initializes bucket grid, taking in as input size of grid and source and exit points (just x coordinate)
+ * for water. Places source of water and bucket on selected points, and obsidian everywhere else
+ */
+function intializeBucketGrid(size, source, exit) {
+    const HEIGHT = 2;
+    var grid = new Array(HEIGHT);
+    for (var i = 0; i < HEIGHT; i++) {
+        grid[i] = new Array(size);
+        for(var j=0; j<size; j++) {
+            grid[i][j] = 5;
+        }
+    }
+    grid[0][source] = 3;
+    grid[1][exit] = 4;
+    return grid;
+}
+/** Function returns boolean if block above bucket has water, representing win
+ */
+function checkForWin(grid, bucketGrid) {
+    for (i = 0; i < bucketGrid[1].length; i++) {
+		if (i == 4) {
+            let bucketLoc = i;
+		}
+	}
+    let previousBlock = grid[grid.length-1][bucketLoc];
+    if (previousBlock == 2 || previousBlock == 3) {
+        return true;
+    }
+    return false;
 }
 
 function intializeGrid() {
