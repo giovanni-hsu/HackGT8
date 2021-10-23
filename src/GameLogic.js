@@ -48,6 +48,38 @@ class GameGrid {
         return grid;
     }
 
+    /** Function initializes bucket grid, taking in as input size of grid and source and exit points (just x coordinate)
+     * for water. Places source of water and bucket on selected points, and obsidian everywhere else
+     */
+    initBucketGrid(size, source, exit) {
+        const HEIGHT = 2;
+        var grid = new Array(HEIGHT);
+        for (var i = 0; i < HEIGHT; i++) {
+            grid[i] = new Array(size);
+            for(var j=0; j<size; j++) {
+                grid[i][j] = 5;
+            }
+        }
+        grid[0][source] = 3;
+        grid[1][exit] = 4;
+        return grid;
+    }
+    /** Function returns boolean if block above bucket has water, representing win
+    */
+    checkForWin(grid, bucketGrid) {
+        for (i = 0; i < bucketGrid[1].length; i++) {
+            if (i == 4) {
+                let bucketLoc = i;
+            }
+        }
+        let previousBlock = grid[grid.length-1][bucketLoc];
+        if (previousBlock == 2 || previousBlock == 3) {
+            return true;
+        }
+        return false;
+    }
+
+
     printGrid() {
         process.stdout.write("----------------\n");
         for(var i=0; i< this.grid.length; i++) {
