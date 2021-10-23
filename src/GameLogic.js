@@ -1,4 +1,4 @@
-/**Types of blocks:
+/**Types of blocks: "air"; "stone"; "water"; "fixw"; "buck" "obsi"
  * 0 Air
  * 1 Stone
  * 2 Water
@@ -17,7 +17,7 @@ class GameGrid {
     }
 
     placeBlock(x, y, type) {
-        if (this.grid[x][y] === 0) {
+        if (this.grid[x][y] === "air") {
             this.grid[x][y] = type;
             return true;
         } else {
@@ -30,8 +30,8 @@ class GameGrid {
     resetGrid() {
         for (let x = 0; x <  this.grid.length; x++) {
             for (let y = 0; y <  this.grid.length; y++) {
-                if ( this.grid[x][y] === 2) {
-                     this.grid[x][y] = 0;
+                if ( this.grid[y][x] === "water" || this.grid[y][x] === "fixw") {
+                     this.grid[y][x] = "air";
                 }
             }
         }
@@ -42,7 +42,7 @@ class GameGrid {
         for (var i = 0; i < this.size; i++) {
             grid[i] = new Array(this.size);
             for(var j=0; j<this.size; j++) {
-                grid[i][j] = 0;
+                grid[i][j] = "air";
             }
         }
         return grid;
@@ -57,11 +57,11 @@ class GameGrid {
         for (var i = 0; i < HEIGHT; i++) {
             grid[i] = new Array(size);
             for(var j=0; j<size; j++) {
-                grid[i][j] = 5;
+                grid[i][j] = 0;
             }
         }
-        grid[0][source] = 3;
-        grid[1][exit] = 4;
+        grid[0][source] = "water";
+        grid[1][exit] = "buck";
         return grid;
     }
     /** Function returns boolean if block above bucket has water, representing win
