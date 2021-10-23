@@ -90,14 +90,14 @@ class GameGrid {
 
 
     printGrid() {
-        process.stdout.write("----------------\n");
+        process.stdout.write("-----------------------------\n");
         for(var i=0; i< this.grid.length; i++) {
             for(var j=0; j< this.grid[i].length; j++) {
-                process.stdout.write(this.numToIcon[this.grid[i][j]] + " ");
+                process.stdout.write(this.grid[i][j].print() + "  ");
             }
             process.stdout.write("|\n");
         }
-        process.stdout.write("----------------\n");
+        process.stdout.write("-----------------------------\n");
     }
 
     updateGrid() {
@@ -134,7 +134,7 @@ class GameGrid {
         }
     }
     updateNeighborBlock(x, y) {
-        Block nowBlock = this.grid[x][y];
+        nowBlock = this.grid[x][y];
         if (nowBlock.blockType != "water") return;
         if (nowBlock.downFlow) {
             if (x+1 >= this.grid.length) return; // last row
@@ -175,9 +175,7 @@ class GameGrid {
             }
         }
     }
-    updateBlock(x, y) {
-        if (this.grid[x][y].blockType != "water")
-    }
+    
 
 //shouldnt this be grid[y][x]?
     placeWater(x, y) {
@@ -203,5 +201,8 @@ class GameGrid {
         )
       }
 }
+//test code 1 start
+game = new GameGrid(8);
+game.placeStone(4, 3);
 
-export default GameGrid
+//export default GameGrid
