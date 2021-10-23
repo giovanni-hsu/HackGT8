@@ -113,7 +113,6 @@
         }
         
     }
-//shouldnt this be grid[y][x]?
     placeWater(x, y) {
          this.grid[y][x] = 2;
     }
