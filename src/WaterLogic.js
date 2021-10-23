@@ -30,6 +30,7 @@ class Block {
             this.blockType = "air";
             this.waterLevel = [0, 0];
         }
+        this.updated = false;
     }
     print() {
         if (this.blockType == "stone") return "##";
