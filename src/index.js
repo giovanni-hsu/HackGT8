@@ -5,22 +5,22 @@ import './index.css';
 import GameGrid from './GameLogic.js';
 
 const blockDict = {
-  1: {
+  stone: {
     'material' : 'stone',
   },
-  0: {
-    'material' : 'empty',
+  air: {
+    'material' : 'air',
   },
-  2: {
+  water: {
     'material' : 'water',
   },
-  3: {
-    'material' : 'water',
+  fixw: {
+    'material' : 'fixw',
   },
-  4: {
+  leftcornerwater: {
     'material' : 'left-corner-water'
   },
-  5: {
+  rightcornerwater: {
     'material' : 'right-corner-water'
   }
 
@@ -30,6 +30,10 @@ class Square extends React.Component {
 
   constructor(props) {
     super(props);
+    //console.log(props);
+    // console.log('piece three', props.grid.getIndex(props.x, props.y), [props.x], [props.y]);
+    // console.log('important piece')
+    // console.log('important piece', blockDict[props.grid.getIndex(props.x, props.y)])
     this.state = {
       material: blockDict[props.grid.getIndex(props.x, props.y)].material,
     };
@@ -38,8 +42,8 @@ class Square extends React.Component {
   render() {
     return (
       <button className={"square"} onClick={() => {
-        this.props.grid.placeStone(this.props.x, this.props.y); 
-        this.setState({material: this.state.material !== 'stone' ? 'stone' : 'empty'})}
+        this.props.grid.placeBlock(this.props.x, this.props.y, 'stone'); 
+        this.setState({material: this.state.material !== 'stone' ? 'stone' : 'air'})}
         }>
         <div className={"material " + blockDict[this.props.grid.getIndex(this.props.x, this.props.y)].material}></div>
       </button>
@@ -49,6 +53,7 @@ class Square extends React.Component {
   
 class Board extends React.Component {
     renderSquare(material, x, y) {
+      //console.log('piece one', x, y, this.props.grid.getIndex(x,y));
       return <Square x={x} y={y} grid={this.props.grid}/>;
     }
 
@@ -57,7 +62,7 @@ class Board extends React.Component {
       for (let row = 0; row < width; row++) {
         const currentRow = [];
         for (let col = 0; col < height; col++) {
-          currentRow.push(blockDict[0]);
+          currentRow.push(blockDict['air']);
         }
           grid.push(currentRow);
       }
@@ -70,6 +75,7 @@ class Board extends React.Component {
           <div className="board-row" key={columnIndex}>
               {row.map((block) => {
                 rowIndex++;
+                //console.log('piece two', block.material, rowIndex, columnIndex, this.props.grid.grid[rowIndex][columnIndex]);
                 return (
                   this.renderSquare(block.material, rowIndex, columnIndex)
                 );
@@ -118,7 +124,7 @@ class Board extends React.Component {
       game.setState({grid: game.state.grid});
       if (game.state.grid.done()) {
         clearInterval(game.waterInterval);
-        console.log(game.state.grid.checkForWin());
+        //console.log(game.state.grid.checkForWin());//put in params
       }
     }
 

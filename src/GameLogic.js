@@ -65,10 +65,10 @@ class GameGrid {
                 this.bucketGrid[i][j] = "air";
             }
         }
-        for (source in sourceArray) {
+        for (let source in sourceArray) {
             this.bucketGrid[0][source] = "water";
         }
-        for (exit in exitArray) {
+        for (let exit in exitArray) {
             this.bucketGrid[1][exit] = "buck";
         }
     }
@@ -76,7 +76,8 @@ class GameGrid {
     */
     checkForWin(grid, bucketGrid) {
         let bucketLoc
-        for (i = 0; i < bucketGrid[1].length; i++) {
+        console.log(bucketGrid);
+        for (let i = 0; i < bucketGrid[1].length; i++) {
             if (i === "buck") {
                 bucketLoc = i;
             }
@@ -121,9 +122,9 @@ class GameGrid {
         }
         
     }
-    updateBlock(x, y) {
-        if (this.grid[x][y] != "water")
-    }
+    // updateBlock(x, y) {
+    //     if (this.grid[x][y] != "water")
+    // }
 
 //shouldnt this be grid[y][x]?
     placeWater(x, y) {
@@ -140,8 +141,8 @@ class GameGrid {
         return false
     }
 
-    placeStone(x, y) {
-        this.grid[y][x] = "stone";
+    placeBlock(x, y, material) {
+        this.grid[y][x] = material;
     }
     getIndex(x, y) {
         return (

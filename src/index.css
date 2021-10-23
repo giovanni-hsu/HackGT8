@@ -37,7 +37,7 @@ body {
     height: 100%;
   }
 
-  .empty {
+  .air {
     background: #fff;
   }
 
@@ -47,6 +47,10 @@ body {
 
   .water {
     background: rgb(92, 126, 190);  
+  }
+
+  .fixw {
+    background: rgb(92, 126, 190);
   }
   
   .square:focus {
