@@ -4,16 +4,19 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 const blockDict = {
-  'stone': {
+  1: {
     'material' : 'stone',
   },
-  'empty': {
+  0: {
     'material' : 'empty',
   },
-  'water': {
+  2: {
     'material' : 'water',
   },
 
+  3: {
+    'material' : 'water',
+  },
 };
 
 class Square extends React.Component {
@@ -33,22 +36,14 @@ class Board extends React.Component {
       return <Square material={material}/>;
     }
 
-    renderInitGrid(width, height) {
-      const grid = [];
-      for (let row = 0; row < width; row++) {
-        const currentRow = [];
-        for (let col = 0; col < height; col++) {
-          currentRow.push(blockDict['empty']);
-        }
-          grid.push(currentRow);
-      }
+    renderGrid(grid) {
 
       return grid.map((row, rowId) => {
         return (
           <div className="board-row" key={rowId}>
-              {row.map((block, index) => {
+              {row.map((blockid, index) => {
                 return (
-                  this.renderSquare(block.material, index)
+                  this.renderSquare(blockDict[blockid].material)
                 );
               })}
           </div>
@@ -59,7 +54,7 @@ class Board extends React.Component {
 
     render() {
       const status = 'Poggers';
-      const renderedGrid = this.renderInitGrid(8, 8);
+      const renderedGrid = this.renderGrid(8, 8);
       console.log(renderedGrid);
 
       return (
