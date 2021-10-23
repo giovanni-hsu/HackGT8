@@ -230,11 +230,12 @@ class GameGrid {
     placeWater(x, y) {
         this.notupdated = true;
         if (x !== 0) throw new Error("you can only place water at top row");
-        if (this.grid[x+1][y].blockType === "stone") {
+        this.grid[x][y].initWater(7, 7);
+        /*if (this.grid[x+1][y].blockType === "stone") {
             this.grid[x][y].initWater(7, 7);
         } else {
             this.grid[x][y].initDownFlowWater();
-        }
+        }*/
     }
     // test code end
 
