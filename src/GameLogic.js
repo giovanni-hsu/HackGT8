@@ -158,6 +158,28 @@ class GameGrid {
         }
         return newGrid;
     }
+
+    get randomBuckGridGen(bucketGrid, numSources, numBucks) {
+        let placedSources = 0;
+        let placedBucks = 0;
+        let index;
+
+        while (placedSources < numSources) {
+            index = Math.floor(Math.random() * bucketGrid[0].length);
+            if (!bucketGrid[0][index].blockType === "water" || !bucketGrid[0][index].blockType === "fixw") {
+                bucketGrid[0][index].blockType = "water"
+                placedSources++;
+            }
+        }
+        while (placedBucks < numBucks) {
+            index = Math.floor(Math.random() * bucketGrid[1].length);
+            if (!bucketGrid[1][index].blockType === "buck") {
+                bucketGrid[0][index].blockType = "buck"
+                placedBucks++;
+            }
+        }
+        return bucketGrid;
+    }
 }
 
 export default GameGrid
