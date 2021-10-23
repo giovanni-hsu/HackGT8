@@ -40,12 +40,15 @@ class Square extends React.Component {
   }
 
   render() {
+    let block = this.props.grid.getIndex(this.props.x, this.props.y);
+    let material = block.blockType === 'water' ? "water w" + (block.waterLevel[0] + 1) + "-" + (block.waterLevel[1]+1) : blockDict[block.blockType].material;
     return (
       <button className={"square"} onClick={() => {
-        this.props.grid.placeBlock(this.props.x, this.props.y, 'stone'); 
-        this.setState({material: this.state.material !== 'stone' ? 'stone' : 'air'})}
+          this.props.grid.placeBlock(this.props.x, this.props.y, 'stone'); 
+          this.setState({material: this.state.material !== 'stone' ? 'stone' : 'air'})
+        }
         }>
-        <div className={"material " + blockDict[this.props.grid.getIndex(this.props.x, this.props.y).blockType].material}></div>
+        <div className={"material " + material}></div>
       </button>
     );
   }

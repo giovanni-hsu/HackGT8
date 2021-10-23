@@ -46,7 +46,202 @@ body {
   }
 
   .water {
-    background: rgb(92, 126, 190);  
+    background-color: rgba(0, 37, 200, 0.637); /* Tint color */
+    background-blend-mode: multiply;
+    background-size: contain;
+  }
+  
+   .w1-1 { 
+    background-image: url('assets/water1-1.png');
+  }
+   .w1-2 { 
+    background-image: url('assets/water1-2.png');
+  }
+   .w1-3 { 
+    background-image: url('assets/water1-3.png');
+  }
+   .w1-4 { 
+    background-image: url('assets/water1-4.png');
+  }
+   .w1-5 { 
+    background-image: url('assets/water1-5.png');
+  }
+   .w1-6 { 
+    background-image: url('assets/water1-6.png');
+  }
+   .w1-7 { 
+    background-image: url('assets/water1-7.png');
+  }
+   .w1-8 { 
+    background-image: url('assets/water1-8.png');
+  }
+   .w2-1 { 
+    background-image: url('assets/water2-1.png');
+  }
+   .w2-2 { 
+    background-image: url('assets/water2-2.png');
+  }
+   .w2-3 { 
+    background-image: url('assets/water2-3.png');
+  }
+   .w2-4 { 
+    background-image: url('assets/water2-4.png');
+  }
+   .w2-5 { 
+    background-image: url('assets/water2-5.png');
+  }
+   .w2-6 { 
+    background-image: url('assets/water2-6.png');
+  }
+   .w2-7 { 
+    background-image: url('assets/water2-7.png');
+  }
+   .w2-8 { 
+    background-image: url('assets/water2-8.png');
+  }
+   .w3-1 { 
+    background-image: url('assets/water3-1.png');
+  }
+   .w3-2 { 
+    background-image: url('assets/water3-2.png');
+  }
+   .w3-3 { 
+    background-image: url('assets/water3-3.png');
+  }
+   .w3-4 { 
+    background-image: url('assets/water3-4.png');
+  }
+   .w3-5 { 
+    background-image: url('assets/water3-5.png');
+  }
+   .w3-6 { 
+    background-image: url('assets/water3-6.png');
+  }
+   .w3-7 { 
+    background-image: url('assets/water3-7.png');
+  }
+   .w3-8 { 
+    background-image: url('assets/water3-8.png');
+  }
+   .w4-1 { 
+    background-image: url('assets/water4-1.png');
+  }
+   .w4-2 { 
+    background-image: url('assets/water4-2.png');
+  }
+   .w4-3 { 
+    background-image: url('assets/water4-3.png');
+  }
+   .w4-4 { 
+    background-image: url('assets/water4-4.png');
+  }
+   .w4-5 { 
+    background-image: url('assets/water4-5.png');
+  }
+   .w4-6 { 
+    background-image: url('assets/water4-6.png');
+  }
+   .w4-7 { 
+    background-image: url('assets/water4-7.png');
+  }
+   .w4-8 { 
+    background-image: url('assets/water4-8.png');
+  }
+   .w5-1 { 
+    background-image: url('assets/water5-1.png');
+  }
+   .w5-2 { 
+    background-image: url('assets/water5-2.png');
+  }
+   .w5-3 { 
+    background-image: url('assets/water5-3.png');
+  }
+   .w5-4 { 
+    background-image: url('assets/water5-4.png');
+  }
+   .w5-5 { 
+    background-image: url('assets/water5-5.png');
+  }
+   .w5-6 { 
+    background-image: url('assets/water5-6.png');
+  }
+   .w5-7 { 
+    background-image: url('assets/water5-7.png');
+  }
+   .w5-8 { 
+    background-image: url('assets/water5-8.png');
+  }
+   .w6-1 { 
+    background-image: url('assets/water6-1.png');
+  }
+   .w6-2 { 
+    background-image: url('assets/water6-2.png');
+  }
+   .w6-3 { 
+    background-image: url('assets/water6-3.png');
+  }
+   .w6-4 { 
+    background-image: url('assets/water6-4.png');
+  }
+   .w6-5 { 
+    background-image: url('assets/water6-5.png');
+  }
+   .w6-6 { 
+    background-image: url('assets/water6-6.png');
+  }
+   .w6-7 { 
+    background-image: url('assets/water6-7.png');
+  }
+   .w6-8 { 
+    background-image: url('assets/water6-8.png');
+  }
+   .w7-1 { 
+    background-image: url('assets/water7-1.png');
+  }
+   .w7-2 { 
+    background-image: url('assets/water7-2.png');
+  }
+   .w7-3 { 
+    background-image: url('assets/water7-3.png');
+  }
+   .w7-4 { 
+    background-image: url('assets/water7-4.png');
+  }
+   .w7-5 { 
+    background-image: url('assets/water7-5.png');
+  }
+  .w7-6 { 
+    background-image: url('assets/water7-6.png');
+  }
+   .w7-7 { 
+    background-image: url('assets/water7-7.png');
+  }
+   .w7-8 { 
+    background-image: url('assets/water7-8.png');
+  }
+   .w8-1 { 
+    background-image: url('assets/water8-1.png');
+  }
+   .w8-2 { 
+    background-image: url('assets/water8-2.png');
+  }
+   .w8-3 { 
+    background-image: url('assets/water8-3.png');
+  }
+   .w8-4 { 
+    background-image: url('assets/water8-4.png');
+  }
+   .w8-5 { 
+    background-image: url('assets/water8-5.png');
+  }
+   .w8-6 { 
+    background-image: url('assets/water8-6.png');
+  }
+   .w8-7 { 
+    background-image: url('assets/water8-7.png');
+  }
+   .w8-8 { 
+    background-image: url('assets/water8-8.png');
   }
 
   .fixw {
