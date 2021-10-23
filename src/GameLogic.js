@@ -8,6 +8,8 @@
 /** Function takes in grid, coordinates and type of block to be placed
  * returns boolean representing success / failure
  */
+import Block from './WaterLogic.js';
+
 class GameGrid {
 
     constructor(size) {
@@ -22,8 +24,8 @@ class GameGrid {
     }
 
     placeBlock(x, y, type) {
-        if (this.grid[y][x] === "air") {
-            this.grid[y][x] = type;
+       if (this.grid[y][x].blockType === "air") {
+            this.grid[y][x] = new Block(type);
             return true;
         } else {
             return false;
@@ -35,8 +37,8 @@ class GameGrid {
     resetGrid() {
         for (let x = 0; x <  this.grid.length; x++) {
             for (let y = 0; y <  this.grid.length; y++) {
-                if ( this.grid[y][x] === "water" || this.grid[y][x] === "fixw") {
-                     this.grid[y][x] = "air";
+                if ( this.grid[y][x].blockType === "water" || this.grid[y][x].blockType === "fixw") {
+                     this.grid[y][x] = new Block("air");
                 }
             }
         }
@@ -47,7 +49,7 @@ class GameGrid {
         for (var i = 0; i < this.size; i++) {
             grid[i] = new Array(this.size);
             for(var j=0; j<this.size; j++) {
-                grid[i][j] = "air";
+                grid[i][j] = new Block("air");
             }
         }
         return grid;
@@ -62,7 +64,7 @@ class GameGrid {
         for (var i = 0; i < HEIGHT; i++) {
             this.bucketGrid[i] = new Array(size);
             for(var j=0; j<size; j++) {
-                this.bucketGrid[i][j] = "air";
+                this.bucketGrid[i][j] = new Block("air");
             }
         }
         for (let source in sourceArray) {
@@ -82,7 +84,7 @@ class GameGrid {
                 bucketLoc = i;
             }
         }
-        let previousBlock = grid[grid.length-1][bucketLoc];
+        let previousBlock = grid[grid.length-1][bucketLoc].blockType;
         if (previousBlock === "water" || previousBlock == "fixw") {
             return true;
         }
@@ -91,50 +93,104 @@ class GameGrid {
 
 
     printGrid() {
-        process.stdout.write("----------------\n");
+        process.stdout.write("-----------------------------\n");
         for(var i=0; i< this.grid.length; i++) {
             for(var j=0; j< this.grid[i].length; j++) {
-                process.stdout.write(this.numToIcon[this.grid[i][j]] + " ");
+                process.stdout.write(this.grid[i][j].print() + "  ");
             }
             process.stdout.write("|\n");
         }
-        process.stdout.write("----------------\n");
+        process.stdout.write("-----------------------------\n");
     }
 
     updateGrid() {
         for(var i=0; i< this.grid.length-1; i++) {
             for(var j=0; j< this.grid[i].length; j++) {
-                if ( this.grid[i][j] === "water") {
-                    if ( this.grid[i+1][j] === "air") {
-                         this.grid[i+1][j] = 4;
-                    } else if ( this.grid[i+1][j] === "stone") {
-                        if ( this.grid[i][j-1] === "air")  this.grid[i][j-1] = 4;
-                        if ( this.grid[i][j+1] === "air")  this.grid[i][j+1] = 4;
+                if ( this.grid[i][j].blockType === "water") {
+                    if ( this.grid[i+1][j].blockType === "air") {
+                         this.grid[i+1][j].blockType = 4;
+                    } else if ( this.grid[i+1][j].blockType === "stone") {
+                        if ( this.grid[i][j-1].blockType === "air")  this.grid[i][j-1] = 4;
+                        if ( this.grid[i][j+1].blockType === "air")  this.grid[i][j+1] = 4;
                     }
-                    this.grid[i][j] = "fixw";
+                    this.grid[i][j] = new Block("fixw");
                 }
             }
         }
         for(i=0; i< this.grid.length; i++) {
             for(j=0; j< this.grid[i].length; j++) {
-                if ( this.grid[i][j] === 4)  this.grid[i][j] = "water";
+                if ( this.grid[i][j].blockType === 4)  this.grid[i][j] = new Block("water");
             }
         }
         
     }
-    // updateBlock(x, y) {
-    //     if (this.grid[x][y] != "water")
-    // }
+
+    updateGrid() {
+        this.updateAllNeighborBlock();
+        this.updateAllBlock();
+    }
+    updateAllNeighborBlock() {
+        for(let i=0; i< this.grid.length; i++) {
+            for(let j=0; j< this.grid[i].length; j++) {
+                this.updateNeighborBlock(i, j);
+            }
+        }
+    }
+    updateNeighborBlock(x, y) {
+        let nowBlock = this.grid[x][y];
+        if (nowBlock.blockType != "water") return;
+        if (nowBlock.downFlow) {
+            if (x+1 >= this.grid.length) return; // last row
+            if (x+2 >= this.grid.length || this.grid[x+2][y].blockType == "air" || this.grid[x+2][y].blockType == "water") {
+                this.grid[x+1][y].initDownFlowWater();
+            } else if (this.grid[x+2][y].blockType == "stone") {
+                if (this.grid[x+1][y].blockType == "air") {
+                    this.grid[x+1][y].initWater(7, 7);
+                } else if (this.grid[x+1][y].blockType == "water") {
+                    this.grid[x+1][y].heighten(7, 7);
+                } else {
+                    throw "strange error 1"
+                }
+            } else {
+                throw "unknown block type";
+            }
+        } else {
+            if (y > 0) {
+                if (this.grid[x][y-1].blockType == "air") {
+                    this.grid[x][y-1].initWater(nowBlock.waterLevel[0] - 1, nowBlock.waterLevel[0]);
+                } else {
+                    this.grid[x][y-1].heighten(nowBlock.waterLevel[0] - 1, nowBlock.waterLevel[0]);
+                }
+            }
+            if (y < this.grid[x].length - 1) {
+                if (this.grid[x][y+1].blockType == "air") {
+                    console.log(this.grid[x][y+1]);
+                    console.log(this.grid[x][y+1].initWater(nowBlock.waterLevel[1], nowBlock.waterLevel[1] - 1));
+                    this.grid[x][y+1].initWater(nowBlock.waterLevel[1], nowBlock.waterLevel[1] - 1);
+                } else {
+                    this.grid[x][y+1].heighten(nowBlock.waterLevel[1], nowBlock.waterLevel[1] - 1);
+                }
+            }
+        }
+    }
+    updateAllBlock() {
+        for(let i=0; i< this.grid.length; i++) {
+            for(let j=0; j< this.grid[i].length; j++) {
+                this.gird[i][j].update();
+            }
+        }
+    }
+    
 
 //shouldnt this be grid[y][x]?
     placeWater(x, y) {
-         this.grid[y][x] = "water";
+         this.grid[y][x] = new Block("water");
     }
     // test code end
 
     done() { //check sides, check split paths
         for (let i = 0; i <  this.grid[0].length; i++) {
-            if ( this.grid[this.grid.length-1][i] === "water" ||  this.grid[this.grid.length-1][i] === "fixw") {
+            if ( this.grid[this.grid.length-1][i].blockType === "water" ||  this.grid[this.grid.length-1][i].blockType === "fixw") {
                 return true
             }
         }
@@ -142,7 +198,7 @@ class GameGrid {
     }
 
     placeBlock(x, y, material) {
-        this.grid[y][x] = material;
+        this.grid[y][x] = new Block(material);
     }
     getIndex(x, y) {
         return (
@@ -150,5 +206,8 @@ class GameGrid {
         )
       }
 }
+//test code 1 start
+let game = new GameGrid(8);
+game.placeBlock(4, 3, 'stone');
 
-export default GameGrid
+export default GameGrid;

@@ -32,11 +32,14 @@ class Square extends React.Component {
     super(props);
     //console.log(props);
     // console.log('piece three', props.grid.getIndex(props.x, props.y), [props.x], [props.y]);
-    // console.log('important piece')
-    // console.log('important piece', blockDict[props.grid.getIndex(props.x, props.y)])
+    // console.log('important piece');
+    console.log(props.grid);
+    console.log('important piece', blockDict[props.grid.getIndex(props.x, props.y).blockType]);
+    console.log('important piece two', blockDict[props.grid.getIndex(props.x, props.y).blockType].material);
     this.state = {
-      material: blockDict[props.grid.getIndex(props.x, props.y)].material,
+      material: blockDict[props.grid.getIndex(props.x, props.y).blockType].material,
     };
+    console.log(this.props);
   }
 
   render() {
@@ -45,7 +48,7 @@ class Square extends React.Component {
         this.props.grid.placeBlock(this.props.x, this.props.y, 'stone'); 
         this.setState({material: this.state.material !== 'stone' ? 'stone' : 'air'})}
         }>
-        <div className={"material " + blockDict[this.props.grid.getIndex(this.props.x, this.props.y)].material}></div>
+        <div className={"material " + blockDict[this.props.grid.getIndex(this.props.x, this.props.y).blockType].material}></div>
       </button>
     );
   }
