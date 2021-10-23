@@ -96,6 +96,14 @@ function placeWater(grid, x, y) {
 }
 // test code end
 
+function done(grid) {
+    for (let i = 0; i < grid[0].length; i++) {
+        if (grid[grid.length][i] === 2 || grid[grid.length][i] === 3) {
+            return true
+        }
+    }
+    return false
+}
 
 function placeBlock(grid, x, y) {
 	grid[x][y] = 1;
