@@ -5,13 +5,16 @@ import './index.css';
 import GameGrid from './GameLogic.js';
 
 const blockDict = {
-  'stone': {
+  1: {
     'material' : 'stone',
   },
-  'empty': {
+  0: {
     'material' : 'empty',
   },
-  'water': {
+  2: {
+    'material' : 'water',
+  },
+  3: {
     'material' : 'water',
   },
 
@@ -22,18 +25,17 @@ class Square extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      material: props.material,
+      material: blockDict[props.grid.getIndex(props.x, props.y)].material,
     };
   }
 
   render() {
-    console.log(this.props.material);
     return (
       <button className={"square"} onClick={() => {
         this.props.grid.placeStone(this.props.x, this.props.y); 
         this.setState({material: this.state.material !== 'stone' ? 'stone' : 'empty'})}
         }>
-        <div className={"material " + this.state.material}></div>
+        <div className={"material " + blockDict[this.props.grid.getIndex(this.props.x, this.props.y)].material}></div>
       </button>
     );
   }
@@ -41,7 +43,7 @@ class Square extends React.Component {
   
 class Board extends React.Component {
     renderSquare(material, x, y) {
-      return <Square material={material} x={x} y={y} grid={this.props.grid}/>;
+      return <Square x={x} y={y} grid={this.props.grid}/>;
     }
 
     renderInitGrid(width, height) {
@@ -49,7 +51,7 @@ class Board extends React.Component {
       for (let row = 0; row < width; row++) {
         const currentRow = [];
         for (let col = 0; col < height; col++) {
-          currentRow.push(blockDict['empty']);
+          currentRow.push(blockDict[0]);
         }
           grid.push(currentRow);
       }
@@ -75,7 +77,7 @@ class Board extends React.Component {
     render() {
       const status = 'Poggers';
       const renderedGrid = this.renderInitGrid(8, 8);
-      console.log(renderedGrid);
+      console.log("Renders");
 
       return (
         <div>
@@ -103,11 +105,12 @@ class Board extends React.Component {
       console.log(this.state);
       this.state.grid.placeWater(this.state.waterStart.x, this.state.waterStart.y);
       while(!this.state.grid.done()) {
-        setTimeout(() => {  this.updateWater(); }, 2000);
+        this.updateWater();
       }
     }
 
     updateWater() {
+      console.log('running');
       this.state.grid.updateGrid();
       this.setState({grid: this.state.grid});
     }

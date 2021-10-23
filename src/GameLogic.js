@@ -69,7 +69,7 @@ class GameGrid {
                         if ( this.grid[i][j-1] === 0)  this.grid[i][j-1] = 4;
                         if ( this.grid[i][j+1] === 0)  this.grid[i][j+1] = 4;
                     }
-                     this.grid[i][j] = 3;
+                    this.grid[i][j] = 3;
                 }
             }
         }
