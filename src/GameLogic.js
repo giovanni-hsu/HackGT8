@@ -82,11 +82,11 @@ class GameGrid {
     }
 //shouldnt this be grid[y][x]?
     placeWater(x, y) {
-         this.grid[x][y] = 2;
+         this.grid[y][x] = 2;
     }
     // test code end
 
-    done() {
+    done() { //check sides, check split paths
         for (let i = 0; i <  this.grid[0].length; i++) {
             if ( this.grid[this.grid.length-1][i] === 2 ||  this.grid[this.grid.length-1][i] === 3) {
                 return true
@@ -96,11 +96,11 @@ class GameGrid {
     }
 
     placeStone(x, y) {
-        this.grid[x][y] = 1;
+        this.grid[y][x] = 1;
     }
     getIndex(x, y) {
         return (
-          this.grid[x][y]
+          this.grid[y][x]
         )
       }
 }
