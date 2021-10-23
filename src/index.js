@@ -3,12 +3,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-function space() {
-  return {
-    color: 'white'
-  }
-}
-
 
 class Square extends React.Component {
     render() {
@@ -53,12 +47,13 @@ class Board extends React.Component {
 
     render() {
       const status = 'Poggers';
+      const renderedGrid = this.renderGrid(8, 8)
 
       return (
         <div>
           <div className="status">{status}</div>
-          
-          {renderGrid(8, 8)}
+
+          {renderedGrid}
         </div>
       );
     }
