@@ -33,13 +33,10 @@ class Square extends React.Component {
     //console.log(props);
     // console.log('piece three', props.grid.getIndex(props.x, props.y), [props.x], [props.y]);
     // console.log('important piece');
-    console.log(props.grid);
-    console.log('important piece', blockDict[props.grid.getIndex(props.x, props.y).blockType]);
-    console.log('important piece two', blockDict[props.grid.getIndex(props.x, props.y).blockType].material);
     this.state = {
       material: blockDict[props.grid.getIndex(props.x, props.y).blockType].material,
     };
-    console.log(this.props);
+    // console.log(this.props);
   }
 
   render() {
@@ -92,7 +89,7 @@ class Board extends React.Component {
     render() {
       const status = 'Poggers';
       const renderedGrid = this.renderInitGrid(this.props.grid.getSize(), this.props.grid.getSize());
-      console.log("Rendered");
+      // console.log("Rendered");
 
       return (
         <div>
@@ -119,11 +116,13 @@ class Board extends React.Component {
       console.log(this.state);
       this.state.grid.initBucketGrid(this.props.size, this.props.waterStart, this.props.waterEnd);
       this.state.grid.placeWater(this.props.waterStart[0], 0);
+      this.state.grid.updateAllBlock();
       this.waterInterval = setInterval(() => {this.updateWater(this)}, 700);
     }
 
     updateWater(game) {
       game.state.grid.updateGrid();
+      console.log(game.state.grid);
       game.setState({grid: game.state.grid});
       if (game.state.grid.done()) {
         clearInterval(game.waterInterval);
