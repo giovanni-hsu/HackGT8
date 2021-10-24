@@ -23,6 +23,11 @@ function process(waterStatusArray, blockArray) {
 	}
 	return newWaterStatusArray;
 }
+/**console.log(process(
+    [0,1,0,0,0,1,0,0],
+    [0,1,0,0,0,1,1,0]
+    ))
+*/
 function plusOne(array) {
     array[0] += 1;
     var i = 0;
@@ -56,7 +61,7 @@ function isZero(a) {
     }
     return true;
 }
-console.log(findSolution([1,1,1,1,0,0,0,0], [[],[null,null,"buck","buck","buck","buck",null,null]]))
+//console.log(findSolution([1,1,1,1,0,0,0,0], [[],[null,null,"buck","buck","buck","buck",null,null]]))
 function findSolution(waterStatusArray, bucketGrid) {
     var bestScore = [0, 0];
     var score;
@@ -79,7 +84,6 @@ function findSolution(waterStatusArray, bucketGrid) {
     if (numBuckets === bestScore[0]) return [true, bestScore[0], bestScore[1]];
     else return [false];
 }
-
 function treeSearch1(waterStatusArray, blockArray, numBlocks, bucketGrid) {
     //console.log("1");
     var nextStatus = process(waterStatusArray, blockArray);
