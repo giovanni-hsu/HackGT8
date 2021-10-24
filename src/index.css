@@ -52,6 +52,14 @@ body {
   .fixw {
     background: rgb(92, 126, 190);
   }
+
+  .bucket {
+    background:rgb(206, 168, 133)
+  }
+
+  .obsidian {
+    background:#000
+  }
   
   .square:focus {
     outline: none;
