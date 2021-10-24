@@ -22,6 +22,12 @@ const blockDict = {
   },
   rightcornerwater: {
     'material' : 'right-corner-water'
+  },
+  obsidian: {
+    'material' : 'obsidian'
+  },
+  bucket: {
+    'material' : 'bucket'
   }
 
 };
@@ -57,11 +63,69 @@ class Square extends React.Component {
     );
   }
 }
+
+class BucketPiece extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      material: blockDict[props.grid.getIndex(props.x, props.y).blockType].material,
+    };
+  }
   
+  render() {
+    // console.log(this.props.grid.bucketGrid[this.props.x][this.props.y])
+    // console.log('props x', this.props.x)
+    // console.log('props y', this.props.y)
+    console.log(this.props.grid.bucketGrid);
+    //console.log(this.props.grid.bucketGrid[this.props.x][1])
+    //console.log('test', blockDict[this.props.grid.bucketGrid[this.props.x][this.props.y]].material);
+    return (
+      <button className={"bucketpiece"}>
+        <div className={"bucketpiece " + blockDict[this.props.grid.bucketGrid[this.props.x][this.props.y]].material}></div>
+      </button>
+    );
+  }
+}
+
 class Board extends React.Component {
     renderSquare(material, x, y) {
       //console.log('piece one', x, y, this.props.grid.getIndex(x,y));
       return <Square x={x} y={y} grid={this.props.grid}/>;
+    }
+
+    renderBucketPiece(material, x, y) {
+      return <BucketPiece x={x} y={y} material={material} grid={this.props.grid}/>;
+    }
+
+    renderBucketGridTop(topbuckets, width) {
+      const grid = [];
+      for (let x = 0; x < width; x++) {
+        grid.push(blockDict['obsidian']);
+      }
+      for(let i = 0; i < topbuckets.length; i++) {
+        grid[topbuckets[i]] = blockDict['bucket'];
+      }
+      let columnIndex = -1;
+      return grid.map((block) => {
+        columnIndex++;
+        return(this.renderBucketPiece(block.material, 0, columnIndex));
+      }
+      );
+    }
+    renderBucketGridBottom(bottombuckets, width) {
+      const grid = [];
+      for (let x = 0; x < width; x++) {
+        grid.push(blockDict['obsidian']);
+      }
+      for(let i = 0; i < bottombuckets.length; i++) {
+        grid[bottombuckets[i]] = blockDict['bucket'];
+      }
+      let columnIndex = -1;
+      return grid.map((block) => {
+        columnIndex++;
+        return(this.renderBucketPiece(block.material, 1, columnIndex));
+      }
+      );
     }
 
     renderInitGrid(width, height) {
@@ -95,14 +159,21 @@ class Board extends React.Component {
 
     render() {
       const status = 'Poggers';
+      const renderedBucketsTop = this.renderBucketGridTop(this.props.waterStart, this.props.grid.getSize())
+      const renderedBucketsBottom = this.renderBucketGridBottom(this.props.waterEnd, this.props.grid.getSize())
+      // console.log(this.props.waterStart)
+      // console.log(this.props.grid.getSize())
+      // console.log(renderedBucketsTop);
       const renderedGrid = this.renderInitGrid(this.props.grid.getSize(), this.props.grid.getSize());
       // console.log("Rendered");
-
+      // console.log(renderedGrid);
+      // console.log(renderedBucketsTop);
       return (
         <div>
           <div className="status">{status}</div>
-
+          {renderedBucketsTop}
           {renderedGrid}
+          {renderedBucketsBottom}
         </div>
       );
     }
@@ -116,11 +187,11 @@ class Board extends React.Component {
       this.state = {
         grid: new GameGrid(props.size),
       }
-      
+      this.bucketGrid = this.state.grid.initBucketGrid(props.size, props.waterStart, props.waterEnd);
     }
 
     startWater() {
-      console.log(this.state);
+      // console.log(this.state);
       this.state.grid.initBucketGrid(this.props.size, this.props.waterStart, this.props.waterEnd);
       this.state.grid.placeWater(this.props.waterStart[0], 0);
       this.state.grid.updateAllBlock();
@@ -129,7 +200,7 @@ class Board extends React.Component {
 
     updateWater(game) {
       game.state.grid.updateGrid();
-      console.log(game.state.grid);
+      // console.log(game.state.grid);
       game.setState({grid: game.state.grid});
       if (game.state.grid.done()) {
         clearInterval(game.waterInterval);
@@ -141,7 +212,7 @@ class Board extends React.Component {
       return (
         <div className="game">
           <div className="game-board">
-            <Board grid={this.state.grid}/>
+            <Board grid={this.state.grid} waterStart={this.props.waterStart} waterEnd={this.props.waterEnd}/>
           </div>
           <button onClick={() => {this.startWater()}}>Start water</button>
         </div>
@@ -151,7 +222,7 @@ class Board extends React.Component {
   
   // ========================================
   
-  ReactDOM.render(
+  ReactDOM.render( 
     <Game size={8} waterStart={[0]} waterEnd={[5]}/>,
     document.getElementById('root')
   );

@@ -21,15 +21,11 @@ body {
     background: transparent;
     border: 1px solid #999;
     float: left;
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 34px;
-    height: 34px;
+    height: 60px;
+    width: 60px;
     margin-right: -1px;
     margin-top: -1px;
     padding: 0;
-    text-align: center;
-    width: 34px;
   }
 
   .material {
@@ -275,6 +271,18 @@ body {
   .fixw {
     background: rgb(92, 126, 190);
   }
+
+  .bucket {
+    background:rgb(145, 196, 156);
+    height: 34px;
+    width: 34px;
+  }
+
+  .obsidian {
+    background:#000;
+    height: 34px;
+    width: 34px;
+  }
   
   .square:focus {
     outline: none;
@@ -292,4 +300,17 @@ body {
   .game-info {
     margin-left: 20px;
   }
-  
+
+  .bucketpiece {
+    
+    float: left;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 34px;
+    height: 34px;
+    margin-right: -1px;
+    margin-top: -1px;
+    padding: 0;
+    text-align: center;
+    width: 34px;
+  }

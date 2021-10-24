@@ -1,4 +1,4 @@
-/**Types of blocks: "air"; "stone"; "water"; "fixw"; "buck"; "obsi"
+/**Types of blocks: "air"; "stone"; "water"; "fixw"; "bucket"; "obsi"
  * 0 Air
  * 1 Stone
  * 2 Water
@@ -69,11 +69,23 @@ class GameGrid {
             }
         }
         for (let source in sourceArray) {
-            this.bucketGrid[0][source] = "water";
+            this.bucketGrid[0][sourceArray[source]] = "bucket";
+        }
+        for (let i = 0; i < this.bucketGrid[0].length; i++) {
+            if (this.bucketGrid[0][i] !== "bucket") {
+                this.bucketGrid[0][i] = "obsidian";
+            }
         }
         for (let exit in exitArray) {
-            this.bucketGrid[1][exit] = "buck";
+            //console.log(exitArray[exit]);
+            this.bucketGrid[1][exitArray[exit]] = "bucket";
         }
+        for (let i = 0; i < this.bucketGrid[1].length; i++) {
+            if (this.bucketGrid[1][i] !== "bucket") {
+                this.bucketGrid[1][i] = "obsidian";
+            }
+        }
+        console.log('bucket grid', this.bucketGrid);
     }
     /** Function returns boolean if block above bucket has water, representing win
     */
@@ -81,7 +93,7 @@ class GameGrid {
         let bucketLoc
         console.log(bucketGrid);
         for (let i = 0; i < bucketGrid[1].length; i++) {
-            if (i === "buck") {
+            if (i === "bucket") {
                 bucketLoc = i;
             }
         }
@@ -228,7 +240,7 @@ class GameGrid {
 
 //shouldnt this be grid[y][x]?
     placeWater(x, y) {
-        this.notupdated = true;
+        this.notupdated = true; //there is an issue here lol it should be y!==0 but changing it to y messes up other stuff
         if (x !== 0) throw new Error("you can only place water at top row");
         this.grid[x][y].initWater(7, 7);
         /*if (this.grid[x+1][y].blockType === "stone") {
