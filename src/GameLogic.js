@@ -58,13 +58,29 @@ class GameGrid {
     generateRandBuckGrid(size) {
         let numSources = Math.floor(Math.random() * (size+1));
         let numBucks = Math.floor(Math.random() * (size+1));
+        let placed = 0;
         var sourceArray = new Array(size);
         var buckArray = new Array(size);
-        let randEntry = 
-        for (let i = 0; i < numSources; i++) {
-
+        let randEntry;
+        while (placed < numSources) {
+            randEntry = Math.floor(Math.random() * size);
+            if (sourceArray[randEntry] !== "bucket") {
+                sourceArray[randEntry] = "bucket";
+                placed++;
+            }
         }
+        placed = 0;
+         while (placed < numBucks) {
+            randEntry = Math.floor(Math.random() * size);
+            if (sourceArray[randEntry] !== "bucket") {
+                sourceArray[randEntry] = "bucket";
+                placed++;
+            }
+        }
+        return initBucketGrid[size, sourceArray, exitArray];
     }
+
+    console.log(generateRandBuckGrid(8));
 
     /** Function initializes bucket grid, taking in as input size of grid and source and exit points (just x coordinate)
      * for water. Places source of water and bucket on selected points, and obsidian everywhere else
