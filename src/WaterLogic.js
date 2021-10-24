@@ -20,6 +20,7 @@ class Block {
         if (this.blockType !== "water") return;
         this.nextWaterLevel[0] = Math.max(this.waterLevel[0], leftHeight, this.nextWaterLevel[0]);
         this.nextWaterLevel[1] = Math.max(this.waterLevel[1], rightHeight, this.nextWaterLevel[1]);
+        this.updated = true;
     }
     update() {
         if (!this.updated) return;
