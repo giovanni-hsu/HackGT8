@@ -256,12 +256,6 @@ class GameGrid {
             }
         }
         return true
-        for (let i = 0; i <  this.grid[0].length; i++) {
-            if ( this.grid[this.grid.length-1][i].blockType === "water" ||  this.grid[this.grid.length-1][i].blockType === "fixw") {
-                return true
-            }
-        }
-        return false
     }
 
     /*placeBlock(x, y, material) {
