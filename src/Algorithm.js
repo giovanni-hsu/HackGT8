@@ -62,7 +62,7 @@ function cntNumOnes(array) {
 }
 function cntNumBucks(array) {
     var numBuckets = 0;
-    for(var i=0; i<8; i++) if (array[i] === "buck") numBuckets += 1;
+    for(var i=0; i<8; i++) if (array[i] === "bucket") numBuckets += 1;
     return numBuckets;
 }
 function arrayIsSame(a, b) {
@@ -77,12 +77,22 @@ function isZero(a) {
     }
     return true;
 }
-console.log(findSolution([0,1,1,1,0,0,0,1], [[],["buck",null,"buck",null,null,"buck",null,"buck"]]))
+function numberize(bucketArray) {
+    var array = new Array(8);
+    for(var i=0; i<8; i++) {
+        if (bucketArray[i] === "bucket") array[i] = 1;
+        else array[i] = 0;
+    }
+    return array;
+}
+console.log(findSolution([["bucket",null,"bucket",null,null,"bucket",null,"bucket"]
+                        ,["bucket",null,"bucket",null,null,"bucket",null,"bucket"]]))
 //console.log(process([1,1,1,1,0,0,0,0], [0,0,0,0,0,0,0,0]));
 //console.log(process([0,1,1,1,0,0,0,0], [0,0,0,0,0,0,0,0]));
-function findSolution(waterStatusArray, bucketGrid_orig) {
-    var bucketGrid = JSON.parse(JSON.stringify(bucketGrid_orig));
-    bucketGrid[1].push(cntNumBucks(bucketGrid[1]));
+function findSolution(bucketGrid) {
+    var waterStatusArray = numberize(bucketGrid[0]);
+    var bucketGrid = JSON.parse(JSON.stringify(bucketGrid[1]));
+    bucketGrid.push(cntNumBucks(bucketGrid));
     var bestScore = [0, 0];
     var score;
     var newBlockArray = [0,0,0,0,0,0,0,0,0];
@@ -93,7 +103,7 @@ function findSolution(waterStatusArray, bucketGrid_orig) {
         //console.log(newBlockArray)
         console.log("Best",bestScore);
         var totalBlocks = newBlockArray[8];
-        if (bestScore[0] === bucketGrid[1][8] && totalBlocks >= bestScore[1]) continue;
+        if (bestScore[0] === bucketGrid[8] && totalBlocks >= bestScore[1]) continue;
         score = treeSearch1(waterStatusArray, newBlockArray, totalBlocks, bucketGrid, newArrayHashSet);
         if (score[0] > bestScore[0]) {
             bestScore = score;
@@ -102,7 +112,7 @@ function findSolution(waterStatusArray, bucketGrid_orig) {
         }
     } while(plusOne(newBlockArray));
     var numBuckets = 0;
-    for(var i=0; i<8; i++) if (bucketGrid[1][i] === "buck") numBuckets += 1;
+    for(var i=0; i<8; i++) if (bucketGrid[i] === "bucket") numBuckets += 1;
     if (numBuckets === bestScore[0]) return [true, bestScore[0], bestScore[1]];
     else return [false];
 }
@@ -124,7 +134,7 @@ function treeSearch1(waterStatusArray, blockArray, numBlocks, bucketGrid, arrayH
         do {
             //console.log(newBlockArray);
             var totalBlocks = numBlocks + newBlockArray[8];
-            if (bestScore[0] === bucketGrid[1][8] && totalBlocks >= bestScore[1]) continue;
+            if (bestScore[0] === bucketGrid[8] && totalBlocks >= bestScore[1]) continue;
             score = treeSearch2(nextStatus, newBlockArray, totalBlocks, bucketGrid, newArrayHashSet);
             if (score[0] > bestScore[0]) {
                 bestScore = score;
@@ -150,7 +160,7 @@ function treeSearch2(waterStatusArray, blockArray, numBlocks, bucketGrid, arrayH
         var newArrayHashSet = new Set();
         do {
             var totalBlocks = numBlocks + newBlockArray[8];
-            if (bestScore[0] === bucketGrid[1][8] && totalBlocks >= bestScore[1]) continue;
+            if (bestScore[0] === bucketGrid[8] && totalBlocks >= bestScore[1]) continue;
             score = treeSearch3(nextStatus, newBlockArray, totalBlocks, bucketGrid, newArrayHashSet);
             //console.log("Score",score);
             if (score[0] > bestScore[0]) {
@@ -177,7 +187,7 @@ function treeSearch3(waterStatusArray, blockArray, numBlocks, bucketGrid, arrayH
         var newArrayHashSet = new Set();
         do {
             var totalBlocks = numBlocks + newBlockArray[8];
-            if (bestScore[0] === bucketGrid[1][8] && totalBlocks >= bestScore[1]) continue;
+            if (bestScore[0] === bucketGrid[8] && totalBlocks >= bestScore[1]) continue;
             score = treeSearch4(nextStatus, newBlockArray, totalBlocks, bucketGrid, newArrayHashSet);
             /*if(score[0] === 4) {
                 console.log("points: ", score[0]);
@@ -212,7 +222,7 @@ function treeSearch4(waterStatusArray, blockArray, numBlocks, bucketGrid, arrayH
 
     //console.log("bucket:" ,bucketGrid);
     for(var i=0; i<8; i++) {
-        if (bucketGrid[1][i] === "buck" && nextStatus[i] === 1) points += 1;
+        if (bucketGrid[i] === "bucket" && nextStatus[i] === 1) points += 1;
     }
 
     //console.log("points:" ,points);
