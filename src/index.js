@@ -224,7 +224,7 @@ class Board extends React.Component {
           <div className="button-list">
           <View style={{margin: 50}}>
         <button onClick={() => {this.startWater()}} className="button" style={{height: 100, width: 300, margin: 30, fontSize: 40,}}>Start water</button>
-        <button onClick={() => {}} style={{height: 100, width: 300, margin: 30, fontSize: 40,}}>Reset</button>
+        <button onClick={() => {this.state.grid.resetGrid()}} style={{height: 100, width: 300, margin: 30, fontSize: 40,}}>Reset</button>
         <button onClick={() => {}} style={{height: 100, width: 300, margin: 30, fontSize: 40,}}>Skip</button>
       </View>
           </div>

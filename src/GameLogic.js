@@ -38,8 +38,8 @@ class GameGrid {
     resetGrid() {
         for (let x = 0; x <  this.grid.length; x++) {
             for (let y = 0; y <  this.grid.length; y++) {
-                if ( this.grid[y][x].blockType === "water" || this.grid[y][x].blockType === "fixw") {
-                     this.grid[y][x] = new Block("air");
+                if ( this.grid[y][x].blockType !== "air") {
+                     this.grid[y][x].blockType = "air";
                 }
             }
         }
