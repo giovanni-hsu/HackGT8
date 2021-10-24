@@ -18,7 +18,7 @@ body {
   }
   
   .square {
-    background: #000;
+    background: transparent;
     border: 1px solid #999;
     float: left;
     font-size: 24px;
@@ -36,10 +36,34 @@ body {
     width: 100%;
     height: 100%;
     image-rendering: pixelated;
+    background-size: contain;
+    position: absolute;
+  }
+
+  .background-block {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-image: url('assets/dirt.png');
+    background-size: contain;
+    image-rendering: pixelated;
+    z-index: -1;
+
+  }
+
+  .block-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .drop-shadow {
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    z-index: 5;
   }
 
   .air {
-    background: #fff;
+    background-color: transparent;
   }
 
   .stone {
@@ -49,8 +73,10 @@ body {
   }
 
   .water {
-    background: #fff;
+    background-color: transparent;
     background-size: contain;
+    opacity: 0.7;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
   }
   
    .w1-1 { 
