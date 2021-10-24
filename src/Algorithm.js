@@ -61,7 +61,9 @@ function isZero(a) {
     }
     return true;
 }
-//console.log(findSolution([1,1,1,1,0,0,0,0], [[],[null,null,"buck","buck","buck","buck",null,null]]))
+console.log(findSolution([1,1,1,1,0,0,0,0], [[],[null,null,"buck","buck","buck","buck",null,null]]))
+//console.log(process([1,1,1,1,0,0,0,0], [0,0,0,0,0,0,0,0]));
+//console.log(process([0,1,1,1,0,0,0,0], [0,0,0,0,0,0,0,0]));
 function findSolution(waterStatusArray, bucketGrid) {
     var bestScore = [0, 0];
     var score;
@@ -69,6 +71,7 @@ function findSolution(waterStatusArray, bucketGrid) {
     do {
         //console.log(newBlockArray);
         //console.log(bestScore);
+        console.log(newBlockArray)
         console.log("Best",bestScore);
         var totalBlocks = cntNumOnes(newBlockArray);
         if (bestScore[0] !== 0 && totalBlocks > bestScore[0]) continue;
@@ -146,6 +149,16 @@ function treeSearch3(waterStatusArray, blockArray, numBlocks, bucketGrid) {
             var totalBlocks = numBlocks + cntNumOnes(newBlockArray);
             if (bestScore[0] !== 0 && totalBlocks > bestScore[0]) continue;
             score = treeSearch4(nextStatus, newBlockArray, totalBlocks, bucketGrid);
+            if(score[0] === 4) {
+                console.log("points: ", score[0]);
+                console.log("numblocks: ", numBlocks);
+                console.log("water Status: ", waterStatusArray);
+                console.log("bucket:",bucketGrid[1]);
+                console.log("block:",blockArray);
+                console.log("next:  ", nextStatus);
+                console.log("-------------------")
+                sleep(10000)
+            }
             if (score[0] > bestScore[0]) {
                 bestScore = score;
             } else if (score[0] === bestScore[0]) {
@@ -165,6 +178,23 @@ function treeSearch4(waterStatusArray, blockArray, numBlocks, bucketGrid) {
     for(var i=0; i<8; i++) {
         if (bucketGrid[1][i] === "buck" && nextStatus[i] === 1) points += 1;
     }
+
+    if(points === 4) {
+        console.log("points: ", points);
+        console.log("numblocks: ", numBlocks);
+        console.log("water Status: ", waterStatusArray);
+        console.log("bucket:",bucketGrid[1]);
+        console.log("block:",blockArray);
+        console.log(nextStatus);
+        console.log("-------------------")
+    }
     //console.log("points:" ,points);
     return [points, numBlocks];
+}
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
 }
