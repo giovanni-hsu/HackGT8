@@ -46,12 +46,19 @@ class Square extends React.Component {
   }
 
   render() {
+    let block = this.props.grid.getIndex(this.props.x, this.props.y);
+    let material = block.blockType === 'water' ? "water w" + (block.waterLevel[0] + 1) + "-" + (block.waterLevel[1]+1) : blockDict[block.blockType].material;
+    let dropShadow = block.blockType === 'stone' ? "drop-shadow" : "";
     return (
-      <button className={"square"} onClick={() => {
-        this.props.grid.placeBlock(this.props.x, this.props.y, 'stone'); 
-        this.setState({material: this.state.material !== 'stone' ? 'stone' : 'air'})}
+      <button className={"square " + dropShadow} onClick={() => {
+          this.props.grid.placeBlock(this.props.x, this.props.y, 'stone'); 
+          this.setState({material: this.state.material !== 'stone' ? 'stone' : 'air'})
+        }
         }>
-        <div className={"material " + blockDict[this.props.grid.getIndex(this.props.x, this.props.y).blockType].material}></div>
+        <div className="block-container">
+          <div className={"material " + material}></div>
+          <div className={"background-block"}></div>
+        </div>
       </button>
     );
   }
@@ -69,12 +76,12 @@ class BucketPiece extends React.Component {
     // console.log(this.props.grid.bucketGrid[this.props.x][this.props.y])
     // console.log('props x', this.props.x)
     // console.log('props y', this.props.y)
-    console.log(this.props);
+    console.log(this.props.grid.bucketGrid);
     //console.log(this.props.grid.bucketGrid[this.props.x][1])
     //console.log('test', blockDict[this.props.grid.bucketGrid[this.props.x][this.props.y]].material);
     return (
-      <button className={"square"}>
-        <div className={"material " + blockDict[this.props.grid.bucketGrid[this.props.x][this.props.y]].material}></div>
+      <button className={"bucketpiece"}>
+        <div className={"bucketpiece " + blockDict[this.props.grid.bucketGrid[this.props.x][this.props.y]].material}></div>
       </button>
     );
   }
@@ -164,9 +171,9 @@ class Board extends React.Component {
       return (
         <div>
           <div className="status">{status}</div>
-          <div>{renderedBucketsTop}</div>
+          {renderedBucketsTop}
           {renderedGrid}
-          <div>{renderedBucketsBottom}</div>
+          {renderedBucketsBottom}
         </div>
       );
     }
@@ -188,7 +195,7 @@ class Board extends React.Component {
       this.state.grid.initBucketGrid(this.props.size, this.props.waterStart, this.props.waterEnd);
       this.state.grid.placeWater(this.props.waterStart[0], 0);
       this.state.grid.updateAllBlock();
-      this.waterInterval = setInterval(() => {this.updateWater(this)}, 700);
+      this.waterInterval = setInterval(() => {this.updateWater(this)}, 400);
     }
 
     updateWater(game) {
