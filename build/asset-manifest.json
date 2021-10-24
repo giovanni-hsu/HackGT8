@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/HackGT8/static/css/main.dbe3b3b4.chunk.css",
+    "main.js": "/HackGT8/static/js/main.fa4416c0.chunk.js",
+    "main.js.map": "/HackGT8/static/js/main.fa4416c0.chunk.js.map",
+    "runtime-main.js": "/HackGT8/static/js/runtime-main.db906ad9.js",
+    "runtime-main.js.map": "/HackGT8/static/js/runtime-main.db906ad9.js.map",
+    "static/js/2.9328b982.chunk.js": "/HackGT8/static/js/2.9328b982.chunk.js",
+    "static/js/2.9328b982.chunk.js.map": "/HackGT8/static/js/2.9328b982.chunk.js.map",
+    "index.html": "/HackGT8/index.html",
+    "static/css/main.dbe3b3b4.chunk.css.map": "/HackGT8/static/css/main.dbe3b3b4.chunk.css.map",
+    "static/js/2.9328b982.chunk.js.LICENSE.txt": "/HackGT8/static/js/2.9328b982.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.db906ad9.js",
+    "static/js/2.9328b982.chunk.js",
+    "static/css/main.dbe3b3b4.chunk.css",
+    "static/js/main.fa4416c0.chunk.js"
+  ]
+}
