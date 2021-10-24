@@ -24,6 +24,14 @@ function process(waterStatusArray, blockArray) {
 	}
 	return newWaterStatusArray;
 }
+function hash(array) {
+    var num = 0;
+    for (let i = 0; i < 8; i++) {
+        num += (2**i)*(array[i]);
+    }
+    return num;
+}
+//console.log(hash([1,0,0,0,1,0,1,1]));
 /**console.log(process(
     [0,1,0,0,0,1,0,0],
     [0,1,0,0,0,1,1,0]
@@ -69,7 +77,7 @@ function isZero(a) {
     }
     return true;
 }
-console.log(findSolution([0,0,1,0,0,0,0,0], [[],[null,null,null,null,null,"buck",null,"buck"]]))
+//console.log(findSolution([0,0,1,0,0,0,0,0], [[],[null,null,null,null,null,"buck",null,"buck"]]))
 //console.log(process([1,1,1,1,0,0,0,0], [0,0,0,0,0,0,0,0]));
 //console.log(process([0,1,1,1,0,0,0,0], [0,0,0,0,0,0,0,0]));
 function findSolution(waterStatusArray, bucketGrid_orig) {
