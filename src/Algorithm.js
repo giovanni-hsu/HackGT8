@@ -86,7 +86,7 @@ function numberize(bucketArray) {
     return array;
 }
 console.log(findSolution([["bucket",null,"bucket",null,null,"bucket",null,"bucket"]
-                        ,["bucket",null,"bucket",null,null,"bucket",null,"bucket"]]))
+                        ,["bucket",null,"bucket",null,"bucket","bucket",null,"bucket"]]))
 //console.log(process([1,1,1,1,0,0,0,0], [0,0,0,0,0,0,0,0]));
 //console.log(process([0,1,1,1,0,0,0,0], [0,0,0,0,0,0,0,0]));
 function findSolution(bucketGrid) {
@@ -96,7 +96,7 @@ function findSolution(bucketGrid) {
     var bestScore = [0, 0];
     var score;
     var newBlockArray = [0,0,0,0,0,0,0,0,0];
-    var newArrayHashSet = new Set();
+    var allHashSets = [new Set(), new Set(), new Set(), new Set()];
     do {
         //console.log(newBlockArray);
         //console.log(bestScore);
@@ -104,7 +104,7 @@ function findSolution(bucketGrid) {
         console.log("Best",bestScore);
         var totalBlocks = newBlockArray[8];
         if (bestScore[0] === bucketGrid[8] && totalBlocks >= bestScore[1]) continue;
-        score = treeSearch1(waterStatusArray, newBlockArray, totalBlocks, bucketGrid, newArrayHashSet);
+        score = treeSearch1(waterStatusArray, newBlockArray, totalBlocks, bucketGrid, allHashSets);
         if (score[0] > bestScore[0]) {
             bestScore = score;
         } else if (score[0] === bestScore[0]) {
@@ -116,26 +116,25 @@ function findSolution(bucketGrid) {
     if (numBuckets === bestScore[0]) return [true, bestScore[0], bestScore[1]];
     else return [false];
 }
-function treeSearch1(waterStatusArray, blockArray, numBlocks, bucketGrid, arrayHashSet) {
+function treeSearch1(waterStatusArray, blockArray, numBlocks, bucketGrid, allHashSets) {
     //console.log("1");
     var nextStatus = process(waterStatusArray, blockArray);
     var hashValue = hash(nextStatus);
     /*if (arrayIsSame(nextStatus, waterStatusArray) && !isZero(blockArray)) {
         return [0, 0];
     } else */
-    if (arrayHashSet.has(hashValue)) {
+    if (allHashSets[0].has(hashValue)) {
         return [0, 0];
     } else {
-        arrayHashSet.add(hashValue);
+        allHashSets[0].add(hashValue);
         var bestScore = [0, 0];
         var score;
         var newBlockArray = [0,0,0,0,0,0,0,0,0];
-        var newArrayHashSet = new Set();
         do {
             //console.log(newBlockArray);
             var totalBlocks = numBlocks + newBlockArray[8];
             if (bestScore[0] === bucketGrid[8] && totalBlocks >= bestScore[1]) continue;
-            score = treeSearch2(nextStatus, newBlockArray, totalBlocks, bucketGrid, newArrayHashSet);
+            score = treeSearch2(nextStatus, newBlockArray, totalBlocks, bucketGrid, allHashSets);
             if (score[0] > bestScore[0]) {
                 bestScore = score;
             } else if (score[0] === bestScore[0]) {
@@ -146,22 +145,21 @@ function treeSearch1(waterStatusArray, blockArray, numBlocks, bucketGrid, arrayH
     //console.log("Best",bestScore);
     return bestScore;
 }
-function treeSearch2(waterStatusArray, blockArray, numBlocks, bucketGrid, arrayHashSet) {
+function treeSearch2(waterStatusArray, blockArray, numBlocks, bucketGrid, allHashSets) {
     //console.log("2");
     var nextStatus = process(waterStatusArray, blockArray);
     var hashValue = hash(nextStatus);
-    if (arrayHashSet.has(hashValue)) {
+    if (allHashSets[1].has(hashValue)) {
         return [0, 0];
     } else {
-        arrayHashSet.add(hashValue);
+        allHashSets[1].add(hashValue);
         var bestScore = [0, 0];
         var score;
         var newBlockArray = [0,0,0,0,0,0,0,0,0];
-        var newArrayHashSet = new Set();
         do {
             var totalBlocks = numBlocks + newBlockArray[8];
             if (bestScore[0] === bucketGrid[8] && totalBlocks >= bestScore[1]) continue;
-            score = treeSearch3(nextStatus, newBlockArray, totalBlocks, bucketGrid, newArrayHashSet);
+            score = treeSearch3(nextStatus, newBlockArray, totalBlocks, bucketGrid, allHashSets);
             //console.log("Score",score);
             if (score[0] > bestScore[0]) {
                 bestScore = score;
@@ -173,22 +171,21 @@ function treeSearch2(waterStatusArray, blockArray, numBlocks, bucketGrid, arrayH
     }//console.log(bestScore);
     return bestScore;
 }
-function treeSearch3(waterStatusArray, blockArray, numBlocks, bucketGrid, arrayHashSet) {
+function treeSearch3(waterStatusArray, blockArray, numBlocks, bucketGrid, allHashSets) {
     //console.log("3");
     var nextStatus = process(waterStatusArray, blockArray);
     var hashValue = hash(nextStatus);
-    if (arrayHashSet.has(hashValue)) {
+    if (allHashSets[2].has(hashValue)) {
         return [0, 0];
     } else {
-        arrayHashSet.add(hashValue);
+        allHashSets[2].add(hashValue);
         var bestScore = [0, 0];
         var score;
         var newBlockArray = [0,0,0,0,0,0,0,0,0];
-        var newArrayHashSet = new Set();
         do {
             var totalBlocks = numBlocks + newBlockArray[8];
             if (bestScore[0] === bucketGrid[8] && totalBlocks >= bestScore[1]) continue;
-            score = treeSearch4(nextStatus, newBlockArray, totalBlocks, bucketGrid, newArrayHashSet);
+            score = treeSearch4(nextStatus, newBlockArray, totalBlocks, bucketGrid, allHashSets);
             /*if(score[0] === 4) {
                 console.log("points: ", score[0]);
                 console.log("numblocks: ", numBlocks);
@@ -208,15 +205,15 @@ function treeSearch3(waterStatusArray, blockArray, numBlocks, bucketGrid, arrayH
     }
     return bestScore;
 }
-function treeSearch4(waterStatusArray, blockArray, numBlocks, bucketGrid, arrayHashSet) {
+function treeSearch4(waterStatusArray, blockArray, numBlocks, bucketGrid, allHashSets) {
     //console.log("4");
     var nextStatus = process(waterStatusArray, blockArray);
     var hashValue = hash(nextStatus);
     var points = 0;
-    if (arrayHashSet.has(hashValue)) {
+    if (allHashSets[3].has(hashValue)) {
         return [0, 0];
     } 
-    arrayHashSet.add(hashValue);
+    allHashSets[3].add(hashValue);
     //if (arrayHashSet.size!=0)
     //console.log(arrayHashSet.size);
 
