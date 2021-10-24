@@ -19,13 +19,17 @@ body {
   
   .square {
     background: transparent;
-    border: 1px solid #999;
+    border: 0px solid rgba(0, 0, 0, 0.5);
     float: left;
     height: 60px;
     width: 60px;
     margin-right: -1px;
     margin-top: -1px;
     padding: 0;
+  }
+
+  .square:hover {
+    outline: 1px solid rgba(0, 0, 0, 0.5);
   }
 
   .material {
@@ -273,15 +277,21 @@ body {
   }
 
   .bucket {
-    background:rgb(145, 196, 156);
-    height: 34px;
-    width: 34px;
+    background:transparent;
+    background-image: url('assets/dispenser_front_vertical.png');
+    background-size: contain;
+    image-rendering: pixelated;
+    height: 60px;
+    width: 60px;
   }
 
   .obsidian {
-    background:#000;
-    height: 34px;
-    width: 34px;
+    background:transparent;
+    background-image: url('assets/stone.png');
+    background-size: contain;
+    image-rendering: pixelated;
+    height: 60px;
+    width: 60px;
   }
   
   .square:focus {
@@ -304,13 +314,14 @@ body {
   .bucketpiece {
     
     float: left;
+    border: 0;
     font-size: 24px;
     font-weight: bold;
-    line-height: 34px;
-    height: 34px;
+    line-height: 60px;
+    height: 60px;
     margin-right: -1px;
     margin-top: -1px;
     padding: 0;
     text-align: center;
-    width: 34px;
+    width: 60px;
   }

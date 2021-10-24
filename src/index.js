@@ -81,7 +81,7 @@ class BucketPiece extends React.Component {
     //console.log('test', blockDict[this.props.grid.bucketGrid[this.props.x][this.props.y]].material);
     return (
       <button className={"bucketpiece"}>
-        <div className={"bucketpiece " + blockDict[this.props.grid.bucketGrid[this.props.x][this.props.y]].material}></div>
+        <div className={"bucketpiece drop-shadow " + blockDict[this.props.grid.bucketGrid[this.props.x][this.props.y]].material}></div>
       </button>
     );
   }
@@ -195,7 +195,7 @@ class Board extends React.Component {
       this.state.grid.initBucketGrid(this.props.size, this.props.waterStart, this.props.waterEnd);
       this.state.grid.placeWater(this.props.waterStart[0], 0);
       this.state.grid.updateAllBlock();
-      this.waterInterval = setInterval(() => {this.updateWater(this)}, 400);
+      this.waterInterval = setInterval(() => {this.updateWater(this)}, 200);
     }
 
     updateWater(game) {
