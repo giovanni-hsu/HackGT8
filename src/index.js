@@ -3,6 +3,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import GameGrid from './GameLogic.js';
+import { View, Image, Text,} from 'react-native';
+//import { styles } from './styles.js';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import background from './assets/background.png';
 
 const blockDict = {
   stone: {
@@ -209,21 +214,83 @@ class Board extends React.Component {
     }
 
     render() {
+      //i added some buttons here, but pretty sure they're not supposed to be here - max
+      //also, no idea why i cant make a stylesheet (kept getting errors and gave up)
       return (
         <div className="game">
           <div className="game-board">
             <Board grid={this.state.grid} waterStart={this.props.waterStart} waterEnd={this.props.waterEnd}/>
           </div>
-          <button onClick={() => {this.startWater()}}>Start water</button>
+          <div className="button-list">
+          <View style={{margin: 50}}>
+        <button onClick={() => {this.startWater()}} className="button" style={{height: 100, width: 300, margin: 30, fontSize: 40,}}>Start water</button>
+        <button onClick={() => {}} style={{height: 100, width: 300, margin: 30, fontSize: 40,}}>Reset</button>
+        <button onClick={() => {}} style={{height: 100, width: 300, margin: 30, fontSize: 40,}}>Skip</button>
+      </View>
+          </div>
         </div>
       );
     }
   }
+
+  class Play extends React.Component {
+
+    constructor(props) {
+      super(props);
+    }
+    // generate
+    // generate rand buck grid
+    // test if solution - repeat until generated with solution
+    // - findSolution method
+    // - if successful, returns [true, (how many buckets), (how many blocks used)]
+    // ^^ these prob one method, call for Skip button as well
+    
+    //player inputs (plays game)
+    // start water
+    // if(done) if(win)
+    // some step here
+    // generate new
+
+  }
   
   // ========================================
-  
+
   ReactDOM.render( 
-    <Game size={8} waterStart={[0]} waterEnd={[5]}/>,
+    <div className="body">
+    <View>
+      
+      <View style={{flexDirection: 'row', height: 60}}>
+        <Popup trigger={<button style={{fontSize: 30, width: '33%'}}>Instructions</button>} position="bottom middle">
+        <div>
+          Your goal is to use the blocks you have been given to direct
+          the water stream from the starting point at the top to the
+          ending point at the bottom!
+        </div>
+        </Popup>
+        <Popup trigger={<button style={{fontSize: 30, width: '33%'}}>How It Works</button>} position="bottom middle">
+        <div>
+          This project was designed and built completely in Javascript,
+          specifically the React.js library. The methods generate random
+          grids, which are tested against an algorithm for solvability.
+          These grids are the puzzles seen on your screen!
+        </div>
+        </Popup>
+        <Popup trigger={<button style={{fontSize: 30, width: '33%'}}>About Us</button>} position="bottom middle">
+        <div>
+          This project was designed by team Discere during HackGT8, for
+          the purpose of developing strong problem solving skills and
+          fundamentals within children. The simplistic designs and
+          themes are catered towards younger audiences, but everyone
+          is invited to give these puzzles a go!
+        </div>
+        </Popup>
+      </View>
+
+      <View style={{left: 200}}>
+        <Game size={8} waterStart={[0]} waterEnd={[5]}/>
+      </View>
+    </View>
+    </div>,
     document.getElementById('root')
+
   );
-  

@@ -325,3 +325,25 @@ body {
     text-align: center;
     width: 60px;
   }
+
+  .button-list {
+    margin: 40;
+  }
+
+  .game-board {
+    margin: 10
+  }
+
+  .board-row {
+  }
+
+  .popup-content {
+    margin: auto;
+    background: rgb(255, 255, 255);
+    width: 100%;
+    padding: 5px;
+  }
+
+  body{
+    background: url(./assets/background.png);
+  }

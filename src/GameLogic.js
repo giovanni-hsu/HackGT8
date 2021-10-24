@@ -77,7 +77,7 @@ class GameGrid {
                 placed++;
             }
         }
-        return initBucketGrid[size, sourceArray, exitArray];
+        return this.initBucketGrid(size, sourceArray, buckArray);
     }
     /** Function initializes bucket grid, taking in as input size of grid and source and exit points (just x coordinate)
      * for water. Places source of water and bucket on selected points, and obsidian everywhere else
