@@ -25,7 +25,7 @@ class GameGrid {
     }
 
     placeBlock(x, y, type) {
-       if (this.grid[y][x].blockType !== "stone") {
+       if (this.grid[y][x].blockType === "air") {
             this.grid[y][x] = new Block(type);
             return true;
         } else {
