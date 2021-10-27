@@ -36,10 +36,10 @@ class GameGrid {
     /** Function takes in grid and replaces water blocks with air blocks
      */
     resetGrid() {
-        for (let x = 0; x <  this.grid.length; x++) {
-            for (let y = 0; y <  this.grid.length; y++) {
-                if ( this.grid[y][x].blockType === "water" || this.grid[y][x].blockType === "fixw") {
-                     this.grid[y][x] = new Block("air");
+        for (let y = 0; y <  this.grid.length; y++) {
+            for (let x = 0; x <  this.grid.length; x++) {
+                if ( this.grid[y][x].blockType === "water" || this.grid[y][x].blockType === "fixw" || this.grid[y][x].blockType === "stone") {
+                     this.grid[y][x].blockType = "air";
                 }
             }
         }
