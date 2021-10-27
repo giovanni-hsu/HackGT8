@@ -85,8 +85,8 @@ function numberize(bucketArray) {
     }
     return array;
 }
-console.log(findSolution([["bucket",null,"bucket",null,null,"bucket",null,"bucket"]
-                        ,["bucket",null,"bucket",null,"bucket","bucket",null,"bucket"]]))
+console.log(findSolution([["bucket",null,null,null,null,null,null,null]
+                        ,["bucket",null,"bucket","bucket","bucket","bucket",null,null]]))
 //console.log(process([1,1,1,1,0,0,0,0], [0,0,0,0,0,0,0,0]));
 //console.log(process([0,1,1,1,0,0,0,0], [0,0,0,0,0,0,0,0]));
 function findSolution(bucketGrid) {
@@ -101,7 +101,6 @@ function findSolution(bucketGrid) {
         //console.log(newBlockArray);
         //console.log(bestScore);
         //console.log(newBlockArray)
-        console.log("Best",bestScore);
         var totalBlocks = newBlockArray[8];
         if (bestScore[0] === bucketGrid[8] && totalBlocks >= bestScore[1]) continue;
         score = treeSearch1(waterStatusArray, newBlockArray, totalBlocks, bucketGrid, allHashSets);
@@ -143,6 +142,8 @@ function treeSearch1(waterStatusArray, blockArray, numBlocks, bucketGrid, allHas
         } while(plusOne(newBlockArray));
     }
     //console.log("Best",bestScore);
+
+    console.log("Best",bestScore);
     return bestScore;
 }
 function treeSearch2(waterStatusArray, blockArray, numBlocks, bucketGrid, allHashSets) {
