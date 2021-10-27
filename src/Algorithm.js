@@ -1,4 +1,4 @@
-function process(waterStatusArray, blockArray) {
+export function process(waterStatusArray, blockArray) {
 	var newWaterStatusArray = new Array(blockArray.length);
     var intermWaterStatusArray = JSON.parse(JSON.stringify(waterStatusArray));
 	var change = true;
@@ -24,7 +24,7 @@ function process(waterStatusArray, blockArray) {
 	}
 	return newWaterStatusArray;
 }
-function hash(array) {
+export function hash(array) {
     var num = 0;
     for (let i = 0; i < 8; i++) {
         num += (2**i)*(array[i]);
@@ -37,7 +37,7 @@ function hash(array) {
     [0,1,0,0,0,1,1,0]
     ))
 */
-function plusOne(array) {
+export function plusOne(array) {
     array[0] += 1;
     array[8] += 1;
     var i = 0;
@@ -53,31 +53,31 @@ function plusOne(array) {
     }
     return true;
 }
-function cntNumOnes(array) {
+export function cntNumOnes(array) {
     var cnt = 0;
     for(var i=0; i<8; i++) {
         cnt += array[i];
     }
     return cnt;
 }
-function cntNumBucks(array) {
+export function cntNumBucks(array) {
     var numBuckets = 0;
     for(var i=0; i<8; i++) if (array[i] === "bucket") numBuckets += 1;
     return numBuckets;
 }
-function arrayIsSame(a, b) {
+export function arrayIsSame(a, b) {
     for(var i=0; i<8; i++) {
         if (a[i] !== b[i]) return false;
     }
     return true;
 }
-function isZero(a) {
+export function isZero(a) {
     for(var i=0; i<8; i++) {
         if (a[i] !== 0) return false;
     }
     return true;
 }
-function numberize(bucketArray) {
+export function numberize(bucketArray) {
     var array = new Array(8);
     for(var i=0; i<8; i++) {
         if (bucketArray[i] === "bucket") array[i] = 1;
@@ -89,7 +89,7 @@ console.log(findSolution([["bucket",null,null,null,null,null,null,null]
                         ,["bucket",null,"bucket","bucket","bucket","bucket",null,null]]))
 //console.log(process([1,1,1,1,0,0,0,0], [0,0,0,0,0,0,0,0]));
 //console.log(process([0,1,1,1,0,0,0,0], [0,0,0,0,0,0,0,0]));
-function findSolution(bucketGrid) {
+export function findSolution(bucketGrid) {
     var waterStatusArray = numberize(bucketGrid[0]);
     var bucketGrid = JSON.parse(JSON.stringify(bucketGrid[1]));
     bucketGrid.push(cntNumBucks(bucketGrid));
@@ -115,7 +115,7 @@ function findSolution(bucketGrid) {
     if (numBuckets === bestScore[0]) return [true, bestScore[0], bestScore[1]];
     else return [false];
 }
-function treeSearch1(waterStatusArray, blockArray, numBlocks, bucketGrid, allHashSets) {
+export function treeSearch1(waterStatusArray, blockArray, numBlocks, bucketGrid, allHashSets) {
     //console.log("1");
     var nextStatus = process(waterStatusArray, blockArray);
     var hashValue = hash(nextStatus);
@@ -146,7 +146,7 @@ function treeSearch1(waterStatusArray, blockArray, numBlocks, bucketGrid, allHas
     console.log("Best",bestScore);
     return bestScore;
 }
-function treeSearch2(waterStatusArray, blockArray, numBlocks, bucketGrid, allHashSets) {
+export function treeSearch2(waterStatusArray, blockArray, numBlocks, bucketGrid, allHashSets) {
     //console.log("2");
     var nextStatus = process(waterStatusArray, blockArray);
     var hashValue = hash(nextStatus);
@@ -172,7 +172,7 @@ function treeSearch2(waterStatusArray, blockArray, numBlocks, bucketGrid, allHas
     }//console.log(bestScore);
     return bestScore;
 }
-function treeSearch3(waterStatusArray, blockArray, numBlocks, bucketGrid, allHashSets) {
+export function treeSearch3(waterStatusArray, blockArray, numBlocks, bucketGrid, allHashSets) {
     //console.log("3");
     var nextStatus = process(waterStatusArray, blockArray);
     var hashValue = hash(nextStatus);
@@ -206,7 +206,7 @@ function treeSearch3(waterStatusArray, blockArray, numBlocks, bucketGrid, allHas
     }
     return bestScore;
 }
-function treeSearch4(waterStatusArray, blockArray, numBlocks, bucketGrid, allHashSets) {
+export function treeSearch4(waterStatusArray, blockArray, numBlocks, bucketGrid, allHashSets) {
     //console.log("4");
     var nextStatus = process(waterStatusArray, blockArray);
     var hashValue = hash(nextStatus);
@@ -226,10 +226,10 @@ function treeSearch4(waterStatusArray, blockArray, numBlocks, bucketGrid, allHas
     //console.log("points:" ,points);
     return [points, numBlocks];
 }
-function sleep(milliseconds) {
+export function sleep(milliseconds) {
   const date = Date.now();
   let currentDate = null;
   do {
     currentDate = Date.now();
   } while (currentDate - date < milliseconds);
-}
+} 
