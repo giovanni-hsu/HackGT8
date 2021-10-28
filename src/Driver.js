@@ -49,9 +49,8 @@ class GameGrid {
         this.resetGrid();
         var results = new Array();
         do {
-            this.bucketGrid = this.generateRandBuckGrid(this.size);
-            results = findSolution([this.bucketGrid[1],this.bucketGrid[2]]);
-            console.log(results[0]);
+            this.generateRandBuckGrid(this.size);
+            results = findSolution(this.bucketGrid);
         } while (!results[0]);
         this.minBlocks = results[2];
     }
@@ -68,19 +67,20 @@ class GameGrid {
     }
     generateRandBuckGrid(size) {
         let numSources = Math.floor(Math.random() * (size) + 1);
-        console.log("numSources " + numSources);
         let numBucks = Math.floor(Math.random() * (size) + 1);
-        console.log("numBucks " + numBucks);
-
-        let placed = 0;
         var sourceArray = new Array(size);
-        sourceArray.fill(new Block("air"));
+        for (let i = 0; i < sourceArray.length; i++) {
+            sourceArray[i] = new Block("air");
+        }
         var buckArray = new Array(size);
-        buckArray.fill(new Block("air"));
+        for (let j = 0; j < buckArray.length; j++) {
+            buckArray[j] = new Block("air");
+        }
         let randEntry;
+        let placed = 0;
         while (placed < numSources) {
             randEntry = Math.floor(Math.random() * size);
-            if (sourceArray[randEntry].blockType !== "bucket") {
+            if (sourceArray[randEntry] === undefined || sourceArray[randEntry].blockType !== "bucket") {
                 sourceArray[randEntry] = new Block("bucket");
                 placed++;
             }
@@ -88,13 +88,12 @@ class GameGrid {
         placed = 0;
         while (placed < numBucks) {
             randEntry = Math.floor(Math.random() * size);
-            if (buckArray[randEntry].blockType !== "bucket") {
+            if (buckArray[randEntry] === undefined || buckArray[randEntry].blockType !== "bucket") {
                 buckArray[randEntry] = new Block("bucket");
                 placed++;
             }
         }
-        //console.log([sourceArray, buckArray]);
-        return [sourceArray, buckArray];
+        this.bucketGrid = [sourceArray, buckArray];
     }
     /** Function initializes bucket grid, taking in as input size of grid and source and exit points (just x coordinate)
      * for water. Places source of water and bucket on selected points, and obsidian everywhere else
@@ -452,6 +451,7 @@ function numberize(bucketArray) {
 //console.log(process([0,1,1,1,0,0,0,0], [0,0,0,0,0,0,0,0]));
 function findSolution(bucketGrid) {
     var waterStatusArray = numberize(bucketGrid[0]);
+    //console.log(bucketGrid);
     var bucketGrid = JSON.parse(JSON.stringify(bucketGrid[1]));
     bucketGrid.push(cntNumBucks(bucketGrid));
     var bestScore = [0, 0];
@@ -596,5 +596,4 @@ function sleep(milliseconds) {
 
 var grid = new GameGrid(8);
 grid.nextGrid();
-
-grid.printGrid();
+console.log(grid.bucketGrid);
